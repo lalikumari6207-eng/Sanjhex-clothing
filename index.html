@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SANJHEX | Premium Fashion Brand</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#0b0b0f;
+color:white;
+overflow-x:hidden;
+}
+
+/* glowing background */
+.glow{
+position:absolute;
+width:400px;
+height:400px;
+background:radial-gradient(circle,#ff00cc,transparent);
+filter:blur(120px);
+top:-100px;
+left:-100px;
+animation:move 6s infinite alternate;
+}
+
+.glow2{
+position:absolute;
+width:400px;
+height:400px;
+background:radial-gradient(circle,#00fff2,transparent);
+filter:blur(120px);
+bottom:-100px;
+right:-100px;
+animation:move 6s infinite alternate;
+}
+
+@keyframes move{
+from{transform:translateY(0px);}
+to{transform:translateY(60px);}
+}
+
+/* navbar */
+nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 60px;
+position:sticky;
+top:0;
+backdrop-filter:blur(10px);
+background:rgba(0,0,0,0.3);
+z-index:10;
+}
+
+.logo{
+font-size:28px;
+font-weight:800;
+color:#00fff2;
+letter-spacing:2px;
+}
+
+nav ul{
+display:flex;
+gap:30px;
+list-style:none;
+}
+
+nav ul li{
+cursor:pointer;
+transition:0.3s;
+}
+
+nav ul li:hover{
+color:#ff00cc;
+transform:scale(1.1);
+}
+
+/* hero section */
+.hero{
+height:90vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+position:relative;
+}
+
+.hero h1{
+font-size:70px;
+letter-spacing:3px;
+animation:fadeIn 2s ease-in-out;
+}
+
+.hero span{
+color:#ff00cc;
+}
+
+.hero p{
+margin-top:20px;
+opacity:0.8;
+max-width:600px;
+}
+
+.btn{
+margin-top:30px;
+padding:12px 30px;
+border:none;
+background:linear-gradient(45deg,#ff00cc,#00fff2);
+color:white;
+font-weight:bold;
+cursor:pointer;
+border-radius:30px;
+transition:0.3s;
+}
+
+.btn:hover{
+transform:scale(1.1);
+box-shadow:0 0 20px #ff00cc;
+}
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(30px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+/* section */
+.section{
+padding:80px 60px;
+}
+
+.section h2{
+text-align:center;
+font-size:40px;
+margin-bottom:40px;
+color:#00fff2;
+}
+
+/* product cards */
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:30px;
+}
+
+.card{
+background:rgba(255,255,255,0.05);
+padding:20px;
+border-radius:20px;
+backdrop-filter:blur(10px);
+transition:0.4s;
+position:relative;
+overflow:hidden;
+}
+
+.card:hover{
+transform:translateY(-10px) scale(1.03);
+box-shadow:0 0 30px rgba(255,0,204,0.3);
+}
+
+.card img{
+width:100%;
+border-radius:15px;
+}
+
+.card h3{
+margin-top:15px;
+}
+
+.price{
+color:#ff00cc;
+font-weight:bold;
+margin-top:10px;
+}
+
+/* footer */
+footer{
+text-align:center;
+padding:40px;
+opacity:0.7;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="glow"></div>
+<div class="glow2"></div>
+
+<nav>
+<div class="logo">SANJHEX</div>
+<ul>
+<li>Home</li>
+<li>Men</li>
+<li>Women</li>
+<li>New Arrivals</li>
+<li>Contact</li>
+</ul>
+</nav>
+
+<section class="hero">
+<h1>Wear Your <span>Attitude</span></h1>
+<p>Premium fashion brand for Men & Women. Luxury streetwear with modern design & bold identity.</p>
+<button class="btn">Shop Now</button>
+</section>
+
+<section class="section">
+<h2>🔥 Men's Collection</h2>
+<div class="grid">
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1520975916090-3105956dac38" alt="">
+<h3>Black Street Jacket</h3>
+<div class="price">₹1999</div>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1521335629791-ce4aec67dd47" alt="">
+<h3>Urban Hoodie</h3>
+<div class="price">₹1499</div>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1520975682031-a3c7b9b1d2a4" alt="">
+<h3>Classic White Shirt</h3>
+<div class="price">₹999</div>
+</div>
+
+</div>
+</section>
+
+<section class="section">
+<h2>💃 Women's Collection</h2>
+<div class="grid">
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1520975928318-4d5a5d3c7bde" alt="">
+<h3>Elegant Dress</h3>
+<div class="price">₹2499</div>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1520975869018-8c3c5c0c2f6c" alt="">
+<h3>Party Wear Gown</h3>
+<div class="price">₹2999</div>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1520975744953-2f2e7c8d1b6c" alt="">
+<h3>Casual Chic Outfit</h3>
+<div class="price">₹1799</div>
+</div>
+
+</div>
+</section>
+
+<footer>
+© 2026 SANJHEX | Designed with ❤️ for Fashion Lovers
+owner Lyzonix technologies 
+inspired by Sanay and jhuna
+
+</footer>
+
+</body>
+</html>
