@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SANJHEX | Motion Luxury Store</title>
+<title>SANJHEX | Luxury Store</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
 
@@ -16,18 +16,19 @@ color:white;
 overflow-x:hidden;
 }
 
-  
-/* BACKGROUND MOTION */
+/* BACKGROUND */
 body::before{
 content:"";
 position:fixed;
 width:200%;
 height:200%;
-background:radial-gradient(circle at 20% 20%,rgba(255,0,204,0.15),transparent),
+background:
+radial-gradient(circle at 20% 20%,rgba(255,0,204,0.15),transparent),
 radial-gradient(circle at 80% 40%,rgba(0,255,242,0.12),transparent);
 animation:move 10s infinite alternate;
 z-index:-1;
 }
+
 @keyframes move{
 0%{transform:translate(0,0);}
 100%{transform:translate(40px,60px);}
@@ -41,7 +42,7 @@ width:100%;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:15px 30px;
+padding:15px 25px;
 background:rgba(0,0,0,0.6);
 backdrop-filter:blur(15px);
 z-index:2000;
@@ -69,13 +70,24 @@ padding:20px;
 transition:0.4s;
 z-index:3000;
 }
+.side.open{right:0;}
+
 .side a{
 display:block;
 color:white;
 margin:20px 0;
 cursor:pointer;
 }
-.side.open{right:0;}
+
+/* OVERLAY */
+.overlay{
+position:fixed;
+top:0;left:0;
+width:100%;height:100%;
+background:rgba(0,0,0,0.6);
+display:none;
+z-index:2500;
+}
 
 /* HERO */
 .hero{
@@ -88,7 +100,7 @@ text-align:center;
 }
 
 .hero h1{
-font-size:60px;
+font-size:50px;
 animation:glow 2s infinite alternate;
 }
 .hero span{color:#ff00cc;}
@@ -96,6 +108,25 @@ animation:glow 2s infinite alternate;
 @keyframes glow{
 0%{text-shadow:0 0 10px #ff00cc;}
 100%{text-shadow:0 0 30px #00fff2;}
+}
+
+/* SALE BADGE */
+.sale{
+margin-top:80px;
+text-align:center;
+font-weight:900;
+font-size:16px;
+letter-spacing:2px;
+background:linear-gradient(90deg,#ffcc00,#ff0055,#00fff2,#ffffff);
+background-size:300% 300%;
+animation:flow 2s infinite linear;
+padding:10px;
+}
+
+@keyframes flow{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
 }
 
 /* SECTION */
@@ -106,8 +137,8 @@ text-align:center;
 
 .section h2{
 font-size:40px;
-margin-bottom:20px;
 color:#00fff2;
+margin-bottom:20px;
 }
 
 /* GRID */
@@ -119,39 +150,26 @@ gap:20px;
 
 .card{
 background:rgba(255,255,255,0.05);
-padding:15px;
 border-radius:15px;
-border:1px solid rgba(255,255,255,0.1);
-transition:0.4s;
+overflow:hidden;
+transition:0.3s;
 cursor:pointer;
 }
 
-.card:hover{
-transform:scale(1.05);
-}
+.card:hover{transform:scale(1.03);}
 
 .card img{
 width:100%;
 height:220px;
 object-fit:cover;
-border-radius:12px;
 }
 
-.price{color:#00fff2;margin-top:5px;}
+.price{
+color:#00fff2;
+margin:5px 0;
+}
 
 /* CART */
-.cart{
-position:fixed;
-right:20px;
-bottom:20px;
-background:#111;
-padding:15px;
-border-radius:15px;
-width:260px;
-display:none;
-z-index:4000;
-}
-
 .cartBtn{
 position:fixed;
 right:20px;
@@ -163,50 +181,33 @@ cursor:pointer;
 z-index:5000;
 }
 
-/* PRODUCT POPUP */
-.popup{
-display:none;
+.cart{
 position:fixed;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-background:#111;
-padding:20px;
-border-radius:15px;
+right:-320px;
+top:0;
 width:300px;
-z-index:5000;
-}
-
-.overlay{
-display:none;
-position:fixed;
-top:0;left:0;
-width:100%;height:100%;
-background:rgba(0,0,0,0.7);
+height:100%;
+background:#111;
+padding:15px;
+transition:0.4s;
 z-index:4000;
+overflow:auto;
 }
+.cart.open{right:0;}
 
 /* ABOUT */
 .about{
 padding:80px 20px;
 text-align:center;
+opacity:0.9;
 }
 
-/* FOOTER */
 footer{
 text-align:center;
 padding:20px;
 background:#000;
-opacity:0.7;
-}
-input,select{
-width:100%;
-padding:8px;
-margin-top:5px;
-border:none;
-border-radius:8px;
-background:#1a1a1a;
-color:white;
+opacity:0.8;
+margin-top:30px;
 }
 button{
 margin-top:10px;
@@ -217,35 +218,6 @@ border-radius:20px;
 background:linear-gradient(45deg,#ff00cc,#00fff2);
 cursor:pointer;
 }
-  /* SALE BADGE ANIMATION */
-.sale-badge{
-position:fixed;
-top:80px;
-left:50%;
-transform:translateX(-50%);
-padding:10px 25px;
-font-weight:800;
-letter-spacing:2px;
-font-size:14px;
-border-radius:30px;
-color:white;
-background:linear-gradient(90deg,#ffcc00,#00fff2,#ff0055);
-background-size:300% 300%;
-animation:flow 2s infinite linear, bounce 1.5s infinite;
-box-shadow:0 0 25px rgba(255,0,204,0.4);
-z-index:9999;
-}
-
-@keyframes flow{
-0%{background-position:0% 50%;}
-50%{background-position:100% 50%;}
-100%{background-position:0% 50%;}
-}
-
-@keyframes bounce{
-0%,100%{transform:translateX(-50%) translateY(0);}
-50%{transform:translateX(-50%) translateY(-6px);}
-  }
 </style>
 </head>
 
@@ -256,197 +228,150 @@ z-index:9999;
 <div class="menu" onclick="toggleMenu()">☰</div>
 </nav>
 
+<div class="overlay" id="overlay" onclick="closeAll()"></div>
+
 <!-- SIDE MENU -->
 <div class="side" id="side">
-<a onclick="scroll('men')">Men</a>
-<a onclick="scroll('women')">Women</a>
-<a onclick="scroll('combo')">Combo</a>
-<a onclick="scroll('about')">About</a>
-<a onclick="openAdmin()">Owner Login</a>
+<a onclick="filter('all')">Home</a>
+<a onclick="filter('men')">Men (<span id="menCount">0</span>)</a>
+<a onclick="filter('women')">Women (<span id="womenCount">0</span>)</a>
+<a onclick="filter('combo')">Combo (<span id="comboCount">0</span>)</a>
 </div>
 
 <!-- HERO -->
 <div class="hero">
 <h1>Wear Your <span>Attitude</span></h1>
-<p>Luxury Streetwear | Sanjhex show your personality</p>
+<p>Luxury Streetwear Brand , SANJHEX SHOW UR PERSONALITY</p>
 </div>
 
-  <div class="sale-badge">
-🔥 UPTO 50% OFF | LIMITED TIME SALE 🔥
-  </div>
-  
-<!-- MEN -->
-<div class="section" id="men">
-<h2>MEN</h2>
-<div class="grid" id="menGrid"></div>
-</div>
+<!-- SALE -->
+<div class="sale">🔥 UPTO 50% OFF | LIMITED TIME SALE 🔥</div>
 
-<!-- WOMEN -->
-<div class="section" id="women">
-<h2>WOMEN</h2>
-<div class="grid" id="womenGrid"></div>
-</div>
-
-<!-- COMBO -->
-<div class="section" id="combo">
-<h2>COMBO</h2>
-<div class="grid" id="comboGrid"></div>
+<!-- PRODUCTS -->
+<div class="section">
+<h2>Products</h2>
+<div class="grid" id="grid"></div>
 </div>
 
 <!-- ABOUT -->
-<div class="about" id="about">
+<div class="about">
 <h2>About SANJHEX</h2>
-<p>Premium luxury streetwear brand focused on oversized fashion, hoodies, and modern street culture sanjhex show your personality.</p>
+<p>SANJHEX is a premium streetwear brand focused on oversized fashion, modern luxury, and bold identity clothing for men, women, and combo outfits.SANJHEX Shoe your personality, Luxury at all side , luxry on thread.</p>
 </div>
 
 <!-- CART -->
 <div class="cartBtn" onclick="toggleCart()">🛒 Cart</div>
 <div class="cart" id="cart"></div>
 
-<!-- POPUP -->
-<div class="overlay" id="overlay"></div>
-<div class="popup" id="popup">
-<h3>Product</h3>
-<input id="pname" placeholder="Name">
-<input id="pprice" placeholder="Price">
-<input id="pimg" placeholder="Image URL">
-<select id="pcat">
-<option>men</option>
-<option>women</option>
-<option>combo</option>
-</select>
-<button onclick="addProduct()">Add</button>
-</div>
-
-<!-- FOOTER -->
-<footer>© 2026 SANJHEX | unit of Lyzonix Technologies</footer>
-
+<footer>© 2026 SANJHEX | Lyzonix Technologies</footer>
 
 <script>
 
-let products=[];
+let products=[
+{cat:"men",name:"Men Streetwear",price:1999,img:"https://images.unsplash.com/photo-1520975916090-3105956dac38"},
+{cat:"women",name:"Women Streetwear",price:1799,img:"https://images.unsplash.com/photo-1520975928318-4d5a5d3c7bde"},
+{cat:"combo",name:"Couple Combo",price:2999,img:"https://images.unsplash.com/photo-1520975869018-8c3c5c0c2f6c"}
+];
+
 let cart=[];
+let current="all";
 
-/* MENU OPEN */
+const side=document.getElementById("side");
+const overlay=document.getElementById("overlay");
+const cartBox=document.getElementById("cart");
+
+/* MENU */
 function toggleMenu(){
-document.getElementById("side").classList.toggle("open");
-document.getElementById("overlay").style.display="block";
+side.classList.toggle("open");
+overlay.style.display="block";
 }
 
-/* CLOSE EVERYTHING */
+/* CLOSE */
 function closeAll(){
-document.getElementById("side").classList.remove("open");
-document.getElementById("cart").classList.remove("open");
-document.getElementById("popup").style.display="none";
-document.getElementById("overlay").style.display="none";
+side.classList.remove("open");
+cartBox.classList.remove("open");
+overlay.style.display="none";
 }
 
-/* SCROLL FIX */
-function scroll(id){
-document.getElementById(id).scrollIntoView({behavior:"smooth"});
+/* FILTER */
+function filter(cat){
+current=cat;
+render();
 closeAll();
 }
 
-/* CART TOGGLE FIX */
+/* CART */
 function toggleCart(){
-document.getElementById("cart").classList.toggle("open");
-document.getElementById("overlay").style.display="block";
+cartBox.classList.toggle("open");
+overlay.style.display="block";
 renderCart();
 }
 
-/* CART ADD */
+/* CART */
+function renderCart(){
+if(cart.length===0){
+cartBox.innerHTML=`
+<h3 style="padding:10px">Cart is empty 🛒</h3>
+<button onclick="feedback()">Give Feedback</button>
+`;
+return;
+}
+
+cartBox.innerHTML="<h2 style='padding:10px;color:#00fff2'>Cart</h2>" +
+cart.map(c=>`
+<div style="padding:10px;border-bottom:1px solid #333">
+${c.name} - ₹${c.price}
+</div>
+`).join("");
+}
+
+/* FEEDBACK */
+function feedback(){
+alert("Thanks for feedback ❤️");
+}
+
+/* ADD CART */
 function addToCart(i){
 cart.push(products[i]);
 renderCart();
 }
 
-/* CART RENDER */
-function renderCart(){
-let box=document.getElementById("cart");
-
-if(cart.length===0){
-box.innerHTML="<p>No items in cart 🛒</p>";
-return;
-}
-
-box.innerHTML="<h3 style='color:#00fff2'>Cart</h3>" +
-cart.map(c=>`
-<p>${c.name} - ₹${c.price}</p>
-`).join("");
-}
-
-/* PRODUCT RENDER FIX (MEN/WOMEN/COMBO + COUNT) */
+/* RENDER */
 function render(){
 
 let men=0,women=0,combo=0;
 
-menGrid.innerHTML="";
-womenGrid.innerHTML="";
-comboGrid.innerHTML="";
+document.getElementById("grid").innerHTML="";
 
 products.forEach((p,i)=>{
 
-let card=`
+if(p.cat==="men") men++;
+if(p.cat==="women") women++;
+if(p.cat==="combo") combo++;
+
+if(current==="all" || current===p.cat){
+
+document.getElementById("grid").innerHTML+=`
 <div class="card" onclick="addToCart(${i})">
 <img src="${p.img}">
 <h3>${p.name}</h3>
 <div class="price">₹${p.price}</div>
 </div>
 `;
-
-if(p.cat==="men"){
-men++;
-menGrid.innerHTML+=card;
 }
-if(p.cat==="women"){
-women++;
-womenGrid.innerHTML+=card;
-}
-if(p.cat==="combo"){
-combo++;
-comboGrid.innerHTML+=card;
-}
-  if(p.cat==="owner login"){
-ownergrid++;
-onwergrid.innerHTML+=card;
-  }
 });
 
-/* LIVE COUNTS (add these spans if you want) */
-if(document.getElementById("menCount")) menCount.innerText=men;
-if(document.getElementById("womenCount")) womenCount.innerText=women;
-if(document.getElementById("comboCount")) comboCount.innerText=combo;
+menCount.innerText=men;
+womenCount.innerText=women;
+comboCount.innerText=combo;
 }
-  
-}
-
-/* ADD PRODUCT */
-function addProduct(){
-let obj={
-name:pname.value,
-price:pprice.value,
-img:pimg.value,
-cat:pcat.value
-};
-
-products.push(obj);
-
-pname.value="";
-pprice.value="";
-pimg.value="";
 
 render();
-closeAll();
-}
 
-/* OVERLAY CLICK CLOSE */
-document.getElementById("overlay").onclick=closeAll;
-  <div class="overlay" id="overlay"></div>
-
-/* INIT */
-render();
+/* overlay */
+overlay.onclick=closeAll;
 
 </script>
 
 </body>
-  </html>
+</html>
