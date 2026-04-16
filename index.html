@@ -236,6 +236,7 @@ cursor:pointer;
 <a onclick="filter('men')">Men (<span id="menCount">0</span>)</a>
 <a onclick="filter('women')">Women (<span id="womenCount">0</span>)</a>
 <a onclick="filter('combo')">Combo (<span id="comboCount">0</span>)</a>
+  <a onclick="adminLogin()">Owner Login</a>
 </div>
 
 <!-- HERO -->
@@ -279,6 +280,30 @@ let current="all";
 const side=document.getElementById("side");
 const overlay=document.getElementById("overlay");
 const cartBox=document.getElementById("cart");
+
+  function adminLogin(){
+let pass = prompt("Enter Owner Code:");
+
+if(pass === "SANJHEX123"){
+openAdminPanel();
+}else{
+alert("Wrong Code ❌");
+}
+  }
+  function renderAdminList(){
+let box=document.getElementById("adminList");
+box.innerHTML="<h4>Products</h4>";
+
+products.forEach((p,i)=>{
+box.innerHTML+=`
+<div style="border:1px solid #333;padding:8px;margin:5px 0">
+${p.name} - ₹${p.price}
+<br>
+<button onclick="deleteProduct(${i})">Delete</button>
+</div>
+`;
+});
+  }
 
 /* MENU */
 function toggleMenu(){
@@ -335,6 +360,10 @@ function addToCart(i){
 cart.push(products[i]);
 renderCart();
 }
+  function openAdminPanel(){
+document.getElementById("admin").style.display="block";
+renderAdminList();
+  }
 
 /* RENDER */
 function render(){
