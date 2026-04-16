@@ -1,18 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="icon" href="logo.png" type="image/png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SANJHEX | Premium Fashion Brand</title>
-  <meta property="https://lalikumari6207-eng.github.io/Sanjhex-clothing/logo.png" content="https://lalikumari6207-eng.github.io/Sanjhex-clothing/images/logo.png">
-  <meta property="og:title" content="Sanjhex Clothing">
-<meta property="og:description" content="Premium & Modern Fashion Brand for Men & Women">
-<meta property="https://lalikumari6207-eng.github.io/Sanjhex-clothing/logo.png" content="https://lalikumari6207-eng.github.io/Sanjhex-clothing/images/logo.png">
-<meta property="og:url" content="https://lalikumari6207-eng.github.io/Sanjhex-clothing/">
-<meta property="og:type" content="website">
-  <meta property=https://lalikumari6207-eng.github.io/Sanjhex-clothing/logo.png content="1200">
-<meta property="https://lalikumari6207-eng.github.io/Sanjhex-clothing/logo.png:height" content="630">
+<title>SANJHEX | Premium Store</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
 
@@ -25,264 +16,303 @@ font-family:'Poppins',sans-serif;
 }
 
 body{
-background:#0b0b0f;
+background: radial-gradient(circle at top,#111827,#05060a);
 color:white;
 overflow-x:hidden;
 }
 
-/* glowing background */
-.glow{
-position:absolute;
-width:400px;
-height:400px;
-background:radial-gradient(circle,#ff00cc,transparent);
-filter:blur(120px);
-top:-100px;
-left:-100px;
-animation:move 6s infinite alternate;
-}
-
-.glow2{
-position:absolute;
-width:400px;
-height:400px;
-background:radial-gradient(circle,#00fff2,transparent);
-filter:blur(120px);
-bottom:-100px;
-right:-100px;
-animation:move 6s infinite alternate;
-}
-
-@keyframes move{
-from{transform:translateY(0px);}
-to{transform:translateY(60px);}
-}
-
-/* navbar */
+/* NAV */
 nav{
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:20px 60px;
+padding:18px 50px;
+background:rgba(10,10,15,0.6);
+backdrop-filter:blur(15px);
+border-bottom:1px solid rgba(255,255,255,0.08);
 position:sticky;
 top:0;
-backdrop-filter:blur(10px);
-background:rgba(0,0,0,0.3);
-z-index:10;
+z-index:100;
 }
 
 .logo{
-font-size:28px;
-font-weight:800;
-color:#00fff2;
-letter-spacing:2px;
-}
-
-nav ul{
-display:flex;
-gap:30px;
-list-style:none;
-}
-
-nav ul li{
-cursor:pointer;
-transition:0.3s;
-}
-
-nav ul li:hover{
-color:#ff00cc;
-transform:scale(1.1);
-}
-
-/* hero section */
-.hero{
-height:90vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-text-align:center;
-position:relative;
-}
-
-.hero h1{
-font-size:70px;
+font-size:26px;
+font-weight:900;
 letter-spacing:3px;
-animation:fadeIn 2s ease-in-out;
-}
-
-.hero span{
-color:#ff00cc;
-}
-
-.hero p{
-margin-top:20px;
-opacity:0.8;
-max-width:600px;
+background:linear-gradient(45deg,#00fff2,#ff00cc);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
 }
 
 .btn{
-margin-top:30px;
-padding:12px 30px;
+padding:10px 16px;
 border:none;
-background:linear-gradient(45deg,#ff00cc,#00fff2);
-color:white;
-font-weight:bold;
+border-radius:25px;
 cursor:pointer;
-border-radius:30px;
+font-weight:600;
+color:#000;
+background:linear-gradient(45deg,#00fff2,#a78bfa);
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+gap:25px;
+padding:30px;
+}
+
+/* CARD */
+.card{
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(18px);
+border:1px solid rgba(255,255,255,0.08);
+border-radius:18px;
+padding:15px;
 transition:0.3s;
 }
 
-.btn:hover{
-transform:scale(1.1);
-box-shadow:0 0 20px #ff00cc;
-}
-
-@keyframes fadeIn{
-from{opacity:0;transform:translateY(30px);}
-to{opacity:1;transform:translateY(0);}
-}
-
-/* section */
-.section{
-padding:80px 60px;
-}
-
-.section h2{
-text-align:center;
-font-size:40px;
-margin-bottom:40px;
-color:#00fff2;
-}
-
-/* product cards */
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:30px;
-}
-
-.card{
-background:rgba(255,255,255,0.05);
-padding:20px;
-border-radius:20px;
-backdrop-filter:blur(10px);
-transition:0.4s;
-position:relative;
-overflow:hidden;
-}
-
 .card:hover{
-transform:translateY(-10px) scale(1.03);
-box-shadow:0 0 30px rgba(255,0,204,0.3);
+transform:translateY(-8px);
+border:1px solid rgba(0,255,242,0.3);
 }
 
 .card img{
 width:100%;
-border-radius:15px;
-}
-
-.card h3{
-margin-top:15px;
+height:220px;
+object-fit:cover;
+border-radius:12px;
 }
 
 .price{
-color:#ff00cc;
-font-weight:bold;
-margin-top:10px;
+color:#00fff2;
+font-weight:700;
+margin-top:6px;
 }
 
-/* footer */
-footer{
-text-align:center;
-padding:40px;
+.desc{
+font-size:12px;
 opacity:0.7;
+margin-top:5px;
+}
+
+/* BUTTON */
+.card button{
+margin-top:10px;
+padding:8px 12px;
+border:none;
+border-radius:20px;
+background:linear-gradient(45deg,#ff00cc,#00fff2);
+color:white;
+cursor:pointer;
+}
+
+/* CART */
+.cart{
+position:fixed;
+right:15px;
+top:100px;
+width:240px;
+background:rgba(0,0,0,0.6);
+backdrop-filter:blur(15px);
+border:1px solid rgba(255,255,255,0.08);
+padding:12px;
+border-radius:15px;
+}
+
+.cart h3{
+color:#00fff2;
+}
+
+.cart-item{
+font-size:12px;
+margin-top:5px;
+border-bottom:1px solid rgba(255,255,255,0.05);
+padding-bottom:3px;
+}
+
+/* REVIEWS */
+.reviews{
+margin-top:10px;
+padding-top:10px;
+border-top:1px solid rgba(255,255,255,0.08);
+}
+
+.star{
+color:#ffd700;
+font-size:13px;
+}
+
+.review-box{
+font-size:11px;
+opacity:0.8;
+margin-top:3px;
+}
+
+/* INPUT */
+input,textarea{
+width:100%;
+padding:7px;
+margin-top:5px;
+border:none;
+border-radius:8px;
+background:rgba(255,255,255,0.07);
+color:white;
+outline:none;
+}
+
+/* ADMIN */
+.admin{
+display:none;
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:rgba(10,10,15,0.95);
+padding:18px;
+border-radius:15px;
+width:320px;
+z-index:200;
+}
+
+.overlay{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.7);
 }
 
 </style>
-<meta name="google-site-verification" content="wyPJCq7rLL8e9uipEopt-ItztYq84U0DS2bgwVMjCx8" />
-  
 </head>
 
 <body>
 
-<div class="glow"></div>
-<div class="glow2"></div>
-
 <nav>
 <div class="logo">SANJHEX</div>
-<ul>
-<li>Home</li>
-<li>Men</li>
-<li>Women</li>
-<li>New Arrivals</li>
-<li>Contact</li>
-</ul>
+<button class="btn" onclick="openAdmin()">Owner Panel</button>
 </nav>
 
-<section class="hero">
-<h1>Wear Your <span>Attitude</span></h1>
-<p>Premium fashion brand for Men & Women. Luxury streetwear with modern design & bold identity.</p>
-<button class="btn">Shop Now</button>
-</section>
+<div class="grid" id="grid"></div>
 
-<section class="section">
-<h2>🔥 Men's Collection</h2>
-<div class="grid">
+<div class="cart">
+<h3>🛒 Cart</h3>
+<div id="cartBox"></div>
+</div>
 
+<div class="overlay" id="overlay"></div>
+
+<div class="admin" id="admin">
+<h3>Owner Login</h3>
+<input type="password" id="code" placeholder="Owner Code">
+
+<div id="form" style="display:none;">
+<input id="name" placeholder="Name">
+<input id="price" placeholder="Price">
+<input id="img" placeholder="Image URL">
+<textarea id="desc" placeholder="Description"></textarea>
+<button onclick="addProduct()">Add Product</button>
+</div>
+
+<button onclick="verify()">Unlock</button>
+</div>
+
+<script>
+let products = JSON.parse(localStorage.getItem("products")) || [];
+let cart = [];
+
+function render(){
+let grid=document.getElementById("grid");
+grid.innerHTML="";
+
+products.forEach((p,i)=>{
+
+if(!p.reviews) p.reviews=[];
+
+let avg = p.reviews.length
+? (p.reviews.reduce((a,b)=>a+b.rating,0)/p.reviews.length).toFixed(1)
+: 0;
+
+grid.innerHTML+=`
 <div class="card">
-<img src="https://images.unsplash.com/photo-1520975916090-3105956dac38" alt="">
-<h3>Black Street Jacket</h3>
-<div class="price">₹1999</div>
+<img src="${p.img}">
+<h3>${p.name}</h3>
+<div class="price">₹${p.price}</div>
+<div class="desc">${p.desc}</div>
+
+<div class="reviews">
+<div class="star">⭐ ${avg} (${p.reviews.length})</div>
+
+<div id="rev-${i}">
+${p.reviews.map(r=>`<div class="review-box">⭐ ${r.rating} - ${r.text}</div>`).join("")}
 </div>
 
-<div class="card">
-<img src="https://images.unsplash.com/photo-1521335629791-ce4aec67dd47" alt="">
-<h3>Urban Hoodie</h3>
-<div class="price">₹1499</div>
+<input id="rate-${i}" type="number" min="1" max="5" placeholder="Rating">
+<input id="text-${i}" placeholder="Review">
+<button onclick="addReview(${i})">Add Review</button>
 </div>
 
-<div class="card">
-<img src="https://images.unsplash.com/photo-1520975682031-a3c7b9b1d2a4" alt="">
-<h3>Classic White Shirt</h3>
-<div class="price">₹999</div>
+<button onclick="addCart(${i})">Add to Cart</button>
 </div>
+`;
+});
+}
 
-</div>
-</section>
+function addCart(i){
+cart.push(products[i]);
+let box=document.getElementById("cartBox");
+box.innerHTML="";
+cart.forEach(c=>{
+box.innerHTML+=`<div class="cart-item">${c.name} - ₹${c.price}</div>`;
+});
+}
 
-<section class="section">
-<h2>💃 Women's Collection</h2>
-<div class="grid">
+function addReview(i){
+let r=document.getElementById("rate-"+i).value;
+let t=document.getElementById("text-"+i).value;
 
-<div class="card">
-<img src="https://images.unsplash.com/photo-1520975928318-4d5a5d3c7bde" alt="">
-<h3>Elegant Dress</h3>
-<div class="price">₹2499</div>
-</div>
+if(!r || !t) return alert("Fill review");
 
-<div class="card">
-<img src="https://images.unsplash.com/photo-1520975869018-8c3c5c0c2f6c" alt="">
-<h3>Party Wear Gown</h3>
-<div class="price">₹2999</div>
-</div>
+products[i].reviews.push({rating:Number(r),text:t});
+localStorage.setItem("products",JSON.stringify(products));
+render();
+}
 
-<div class="card">
-<img src="https://images.unsplash.com/photo-1520975744953-2f2e7c8d1b6c" alt="">
-<h3>Casual Chic Outfit</h3>
-<div class="price">₹1799</div>
-</div>
+function openAdmin(){
+admin.style.display="block";
+overlay.style.display="block";
+}
 
-</div>
-</section>
+function verify(){
+if(code.value==="SANJHEX123"){
+form.style.display="block";
+}else{
+alert("Wrong Code");
+}
+}
 
-<footer>
-© 2026 SANJHEX | 
-owner Lyzonix technologies ||
-inspired by Sanjay and jhuna||
+function addProduct(){
+products.push({
+name:name.value,
+price:price.value,
+img:img.value,
+desc:desc.value,
+reviews:[]
+});
 
-</footer>
+localStorage.setItem("products",JSON.stringify(products));
+render();
+alert("Product Added");
+}
+
+overlay.onclick=()=>{
+admin.style.display="none";
+overlay.style.display="none";
+}
+
+render();
+</script>
 
 </body>
 </html>
-
