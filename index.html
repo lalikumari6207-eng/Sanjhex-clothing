@@ -245,7 +245,7 @@ cursor:pointer;
 <p>Luxury Streetwear Brand , SANJHEX SHOW UR PERSONALITY</p>
 </div>
 
-<!-- SALE -->
+<!- SALE -->-
 <div class="sale">🔥 UPTO 50% OFF | LIMITED TIME SALE 🔥</div>
 
 <!-- PRODUCTS -->
@@ -362,6 +362,21 @@ renderCart();
 }
   function openAdminPanel(){
 document.getElementById("admin").style.display="block";
+renderAdminList();
+  }
+  function addProduct(){
+products.push({
+name:pname.value,
+price:pprice.value,
+img:pimg.value,
+cat:pcat.value
+});
+
+pname.value="";
+pprice.value="";
+pimg.value="";
+
+render();
 renderAdminList();
   }
 
