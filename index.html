@@ -320,32 +320,103 @@ z-index:9999;
 <!-- FOOTER -->
 <footer>© 2026 SANJHEX | unit of Lyzonix Technologies</footer>
 
+
 <script>
 
 let products=[];
 let cart=[];
 
-/* MENU */
+/* MENU OPEN */
 function toggleMenu(){
 document.getElementById("side").classList.toggle("open");
+document.getElementById("overlay").style.display="block";
 }
 
-/* SCROLL */
+/* CLOSE EVERYTHING */
+function closeAll(){
+document.getElementById("side").classList.remove("open");
+document.getElementById("cart").classList.remove("open");
+document.getElementById("popup").style.display="none";
+document.getElementById("overlay").style.display="none";
+}
+
+/* SCROLL FIX */
 function scroll(id){
 document.getElementById(id).scrollIntoView({behavior:"smooth"});
+closeAll();
 }
 
-/* CART */
+/* CART TOGGLE FIX */
 function toggleCart(){
-let c=document.getElementById("cart");
-c.style.display=c.style.display==="block"?"none":"block";
-c.innerHTML=cart.map(x=>`<p>${x.name} - ₹${x.price}</p>`).join("");
+document.getElementById("cart").classList.toggle("open");
+document.getElementById("overlay").style.display="block";
+renderCart();
 }
 
-/* ADMIN */
-function openAdmin(){
-document.getElementById("popup").style.display="block";
-document.getElementById("overlay").style.display="block";
+/* CART ADD */
+function addToCart(i){
+cart.push(products[i]);
+renderCart();
+}
+
+/* CART RENDER */
+function renderCart(){
+let box=document.getElementById("cart");
+
+if(cart.length===0){
+box.innerHTML="<p>No items in cart 🛒</p>";
+return;
+}
+
+box.innerHTML="<h3 style='color:#00fff2'>Cart</h3>" +
+cart.map(c=>`
+<p>${c.name} - ₹${c.price}</p>
+`).join("");
+}
+
+/* PRODUCT RENDER FIX (MEN/WOMEN/COMBO + COUNT) */
+function render(){
+
+let men=0,women=0,combo=0;
+
+menGrid.innerHTML="";
+womenGrid.innerHTML="";
+comboGrid.innerHTML="";
+
+products.forEach((p,i)=>{
+
+let card=`
+<div class="card" onclick="addToCart(${i})">
+<img src="${p.img}">
+<h3>${p.name}</h3>
+<div class="price">₹${p.price}</div>
+</div>
+`;
+
+if(p.cat==="men"){
+men++;
+menGrid.innerHTML+=card;
+}
+if(p.cat==="women"){
+women++;
+womenGrid.innerHTML+=card;
+}
+if(p.cat==="combo"){
+combo++;
+comboGrid.innerHTML+=card;
+}
+  if(p.cat==="owner login"){
+ownergrid++;
+onwergrid.innerHTML+=card;
+  }
+});
+
+/* LIVE COUNTS (add these spans if you want) */
+if(document.getElementById("menCount")) menCount.innerText=men;
+if(document.getElementById("womenCount")) womenCount.innerText=women;
+if(document.getElementById("comboCount")) comboCount.innerText=combo;
+}
+  
 }
 
 /* ADD PRODUCT */
@@ -356,37 +427,22 @@ price:pprice.value,
 img:pimg.value,
 cat:pcat.value
 };
+
 products.push(obj);
+
+pname.value="";
+pprice.value="";
+pimg.value="";
+
 render();
+closeAll();
 }
 
-/* RENDER */
-function render(){
-menGrid.innerHTML="";
-womenGrid.innerHTML="";
-comboGrid.innerHTML="";
+/* OVERLAY CLICK CLOSE */
+document.getElementById("overlay").onclick=closeAll;
+  <div class="overlay" id="overlay"></div>
 
-products.forEach((p,i)=>{
-let card=`
-<div class="card" onclick="addToCart(${i})">
-<img src="${p.img}">
-<h3>${p.name}</h3>
-<div class="price">₹${p.price}</div>
-</div>
-`;
-
-if(p.cat==="men") menGrid.innerHTML+=card;
-if(p.cat==="women") womenGrid.innerHTML+=card;
-if(p.cat==="combo") comboGrid.innerHTML+=card;
-});
-}
-
-/* CART ADD */
-function addToCart(i){
-cart.push(products[i]);
-alert("Added to cart");
-}
-
+/* INIT */
 render();
 
 </script>
