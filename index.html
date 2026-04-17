@@ -3,47 +3,65 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SANJHEX Store</title>
+<title>SANJHEX</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Poppins;}
 
-body{background:#0b0c10;color:white;}
+body{background:#05060a;color:white;overflow-x:hidden;}
 
+/* NAV */
 nav{
+position:fixed;top:0;width:100%;
 display:flex;justify-content:space-between;
-padding:15px;background:black;
-position:fixed;width:100%;top:0;
+padding:15px;background:black;z-index:1000;
 }
+.logo{color:#00fff2;font-weight:800;}
+.menu{cursor:pointer;font-size:20px;}
 
-.logo{font-weight:800;color:#00fff2;}
-
-.hero{
+/* SALE */
+.sale{
 margin-top:60px;
-text-align:center;padding:60px;
+text-align:center;
+padding:10px;
+font-weight:800;
+background:linear-gradient(90deg,red,yellow,green,blue);
+background-size:300%;
+animation:flow 3s linear infinite;
+}
+@keyframes flow{
+0%{background-position:0%;}
+100%{background-position:100%;}
 }
 
+/* HERO */
+.hero{text-align:center;padding:50px;}
+.hero h1{font-size:40px;}
+.hero span{color:#ff00cc;}
+
+/* FILTER */
+.filters{text-align:center;margin:10px;}
+.filters button{width:auto;padding:8px 15px;margin:5px;}
+
+/* GRID */
 .grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 gap:20px;padding:20px;
 }
-
 .card{
 background:#111;padding:10px;border-radius:10px;
-transition:0.3s;
+transition:.3s;
 }
-.card:hover{transform:scale(1.03);}
-
+.card:hover{transform:scale(1.05);}
 .card img{width:100%;height:200px;object-fit:cover;}
 
 button{
-width:100%;margin-top:5px;padding:8px;
 border:none;border-radius:20px;
 background:linear-gradient(45deg,#ff00cc,#00fff2);
-cursor:pointer;
+cursor:pointer;color:white;
 }
 
 /* CART */
@@ -51,7 +69,7 @@ cursor:pointer;
 position:fixed;right:-320px;top:0;
 width:300px;height:100%;
 background:#111;padding:10px;
-transition:.3s;overflow:auto;
+transition:.3s;overflow:auto;z-index:2000;
 }
 .cart.open{right:0;}
 
@@ -61,28 +79,37 @@ background:#ff00cc;padding:10px;border-radius:30px;
 cursor:pointer;
 }
 
+/* MODAL */
+.modal{
+display:none;
+position:fixed;top:0;left:0;
+width:100%;height:100%;
+background:rgba(0,0,0,0.7);
+justify-content:center;align-items:center;
+}
+.modalBox{
+background:#111;padding:20px;width:300px;
+}
+
 /* ADMIN */
 .admin{
 display:none;
 position:fixed;top:50%;left:50%;
 transform:translate(-50%,-50%);
 background:#111;padding:20px;width:300px;
-z-index:1000;
+z-index:3000;
 }
-.admin input,select{
-width:100%;margin:5px 0;padding:8px;
-}
+.admin input,select{width:100%;margin:5px 0;padding:8px;}
 
-/* MODAL */
-.modal{
-display:none;
-position:fixed;top:0;left:0;
-width:100%;height:100%;
-background:rgba(0,0,0,0.8);
-justify-content:center;align-items:center;
-}
-.modalBox{
-background:#111;padding:20px;width:300px;
+/* ABOUT */
+.about{text-align:center;padding:40px;}
+
+/* FOOTER */
+footer{
+text-align:center;
+padding:20px;
+background:black;
+margin-top:20px;
 }
 </style>
 </head>
@@ -91,17 +118,31 @@ background:#111;padding:20px;width:300px;
 
 <nav>
 <div class="logo">SANJHEX</div>
-<div onclick="adminLogin()">👑</div>
+<div class="menu" onclick="adminLogin()">👑</div>
 </nav>
 
+<div class="sale">🔥 UPTO 40% OFF ON ALL PRODUCTS 🔥</div>
+
 <div class="hero">
-<h1>Luxury Streetwear SANJHEX Show your personality</h1>
+<h1>Wear Your <span>Attitude Luxury on Threads</span></h1>
+</div>
+
+<div class="filters">
+<button onclick="filter('all')">All</button>
+<button onclick="filter('men')">Men</button>
+<button onclick="filter('women')">Women</button>
+<button onclick="filter('combo')">Combo</button>
 </div>
 
 <div class="grid" id="grid"></div>
 
 <div class="cartBtn" onclick="toggleCart()">🛒</div>
 <div class="cart" id="cart"></div>
+
+<!-- MODAL -->
+<div class="modal" id="modal" onclick="closeModal()">
+<div class="modalBox" id="modalBox" onclick="event.stopPropagation()"></div>
+</div>
 
 <!-- ADMIN -->
 <div class="admin" id="admin">
@@ -119,134 +160,103 @@ background:#111;padding:20px;width:300px;
 <div id="adminList"></div>
 </div>
 
-<!-- PRODUCT MODAL -->
-<div class="modal" id="modal">
-<div class="modalBox" id="modalBox"></div>
+<!-- ABOUT -->
+<div class="about">
+<h2>About SANJHEX</h2>
+<p>Premium streetwear brand focused on luxury oversized fashion. SANJHEX show your personality , our products are a very luxury quality , Luxury on tread , Sanjhex is unit of lyzonix Technologies</p>
 </div>
+
+<footer>© 2026 SANJHEX | Lyzonix Technologies</footer>
 
 <script>
 
-let products = JSON.parse(localStorage.getItem("products")) || [];
+let products=JSON.parse(localStorage.getItem("products"))||[];
 let cart=[];
+let current="all";
 
-/* SAVE */
-function save(){
-localStorage.setItem("products",JSON.stringify(products));
+function save(){localStorage.setItem("products",JSON.stringify(products));}
+
+/* FILTER */
+function filter(cat){
+current=cat;
+render();
 }
 
-/* RENDER PRODUCTS */
+/* RENDER */
 function render(){
 let grid=document.getElementById("grid");
 grid.innerHTML="";
 
 products.forEach((p,i)=>{
+if(current==="all"||p.cat===current){
 grid.innerHTML+=`
 <div class="card">
 <img src="${p.img}" onclick="openProduct(${i})">
 <h3>${p.name}</h3>
 <p>₹${p.price}</p>
-<button onclick="addToCart(${i})">Add to Cart</button>
-</div>
-`;
+<button onclick="addToCart(${i})">Add</button>
+</div>`;
+}
 });
 }
 
-/* PRODUCT VIEW */
+/* PRODUCT */
 function openProduct(i){
 let p=products[i];
-
 modal.style.display="flex";
 modalBox.innerHTML=`
 <h2>${p.name}</h2>
 <img src="${p.img}" style="width:100%">
 <p>₹${p.price}</p>
-<button onclick="addToCart(${i})">Add to Cart</button>
-<button onclick="closeModal()">Close</button>
-`;
+<button onclick="addToCart(${i})">Add to Cart</button>`;
 }
-
-function closeModal(){
-modal.style.display="none";
-}
+function closeModal(){modal.style.display="none";}
 
 /* CART */
 function addToCart(i){
 let found=cart.find(c=>c.name===products[i].name);
-if(found){found.qty++;}
-else{cart.push({...products[i],qty:1});}
+if(found){found.qty++;}else{cart.push({...products[i],qty:1});}
 renderCart();
 }
 
 function renderCart(){
 let box=document.getElementById("cart");
 
-if(cart.length===0){
-box.innerHTML="<h3>Cart Empty</h3>";
-return;
-}
+if(cart.length==0){box.innerHTML="Cart Empty";return;}
 
 let total=0;
 box.innerHTML="<h2>Cart</h2>";
 
 cart.forEach((c,i)=>{
 total+=c.price*c.qty;
-
 box.innerHTML+=`
 <div>
-${c.name} 
-<br>
-Qty: 
-<button onclick="changeQty(${i},-1)">-</button>
-${c.qty}
-<button onclick="changeQty(${i},1)">+</button>
-<br>
-₹${c.price*c.qty}
+${c.name} x${c.qty} - ₹${c.price*c.qty}
 <button onclick="removeItem(${i})">Remove</button>
-</div>
-`;
+</div>`;
 });
 
-box.innerHTML+=`<h3>Total ₹${total}</h3>
-<button onclick="checkout()">Buy Now</button>`;
+box.innerHTML+=`<h3>Total ₹${total}</h3>`;
 }
 
-function changeQty(i,val){
-cart[i].qty+=val;
-if(cart[i].qty<=0) cart.splice(i,1);
-renderCart();
-}
-
-function removeItem(i){
-cart.splice(i,1);
-renderCart();
-}
+function removeItem(i){cart.splice(i,1);renderCart();}
 
 function toggleCart(){
 document.getElementById("cart").classList.toggle("open");
 }
 
-/* CHECKOUT */
-function checkout(){
-alert("Order Placed Successfully ✅");
-cart=[];
-renderCart();
-}
-
 /* ADMIN */
 function adminLogin(){
-let pass=prompt("Enter Owner Code");
+let pass=prompt("Code?");
 if(pass==="SANJHEX123"){
-document.getElementById("admin").style.display="block";
+admin.style.display="block";
 renderAdminList();
-}else{
-alert("Wrong Code ❌");
 }
 }
 
 function addProduct(){
-if(!pname.value || !pprice.value || !pimg.value){
-alert("Fill all fields ❌");
-return;
+if(!pname.value||!pprice.value||!pimg.value){
+alert("Fill all fields");return;
 }
 
 products.push({
@@ -256,34 +266,26 @@ img:pimg.value,
 cat:pcat.value
 });
 
-pname.value="";
-pprice.value="";
-pimg.value="";
-
-save();
-render();
-renderAdminList();
+pname.value="";pprice.value="";pimg.value="";
+save();render();renderAdminList();
 }
 
 function renderAdminList(){
 let box=document.getElementById("adminList");
-box.innerHTML="<h4>Products</h4>";
+box.innerHTML="";
 
 products.forEach((p,i)=>{
 box.innerHTML+=`
 <div>
-${p.name} ₹${p.price}
+${p.name}
 <button onclick="deleteProduct(${i})">Delete</button>
-</div>
-`;
+</div>`;
 });
 }
 
 function deleteProduct(i){
 products.splice(i,1);
-save();
-render();
-renderAdminList();
+save();render();renderAdminList();
 }
 
 render();
