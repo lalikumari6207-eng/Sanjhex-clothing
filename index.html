@@ -12,103 +12,175 @@
 
 body{background:#05060a;color:white;overflow-x:hidden;}
 
-/* NAV */
+/* TOP BAR */
 nav{
 position:fixed;top:0;width:100%;
 display:flex;justify-content:space-between;
-padding:15px;background:black;z-index:1000;
+padding:12px 18px;
+background:black;
+z-index:1000;
 }
-.logo{color:#00fff2;font-weight:800;}
-.menu{cursor:pointer;font-size:20px;}
 
-/* SALE */
+.logo{color:#00fff2;font-weight:800;}
+
+/* MENU */
+.menu{cursor:pointer;font-size:22px;}
+
+/* SALE ANIMATION */
 .sale{
-margin-top:60px;
+margin-top:55px;
 text-align:center;
-padding:10px;
+padding:8px;
 font-weight:800;
 background:linear-gradient(90deg,red,yellow,green,blue);
 background-size:300%;
 animation:flow 3s linear infinite;
 }
+
 @keyframes flow{
 0%{background-position:0%;}
 100%{background-position:100%;}
 }
 
 /* HERO */
-.hero{text-align:center;padding:50px;}
-.hero h1{font-size:40px;}
-.hero span{color:#ff00cc;}
-
-/* FILTER */
-.filters{text-align:center;margin:10px;}
-.filters button{width:auto;padding:8px 15px;margin:5px;}
-
-/* GRID */
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:20px;padding:20px;
+.hero{
+text-align:center;
+padding:35px;
 }
-.card{
-background:#111;padding:10px;border-radius:10px;
+.hero h1 span{color:#ff00cc;}
+
+/* CATEGORY CARDS */
+.category{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:15px;
+padding:15px;
+}
+
+.catCard{
+background:#111;
+border-radius:12px;
+overflow:hidden;
+cursor:pointer;
 transition:.3s;
 }
-.card:hover{transform:scale(1.05);}
+.catCard:hover{transform:scale(1.03);}
+.catCard img{width:100%;height:200px;object-fit:cover;}
+
+/* PRODUCTS */
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:15px;
+padding:15px;
+}
+
+.card{
+background:#111;
+padding:10px;
+border-radius:10px;
+}
 .card img{width:100%;height:200px;object-fit:cover;}
 
 button{
-border:none;border-radius:20px;
+width:100%;
+margin-top:5px;
+padding:8px;
+border:none;
+border-radius:20px;
 background:linear-gradient(45deg,#ff00cc,#00fff2);
-cursor:pointer;color:white;
+cursor:pointer;
+color:white;
 }
 
 /* CART */
+.cartBtn{
+position:fixed;
+top:15px;
+right:60px;
+background:#ff00cc;
+padding:10px;
+border-radius:50%;
+cursor:pointer;
+z-index:2000;
+}
+
 .cart{
-position:fixed;right:-320px;top:0;
-width:300px;height:100%;
-background:#111;padding:10px;
-transition:.3s;overflow:auto;z-index:2000;
+position:fixed;
+right:-320px;
+top:0;
+width:300px;
+height:100%;
+background:#111;
+padding:10px;
+transition:.3s;
+z-index:2000;
+overflow:auto;
 }
 .cart.open{right:0;}
-
-.cartBtn{
-position:fixed;bottom:20px;right:20px;
-background:#ff00cc;padding:10px;border-radius:30px;
-cursor:pointer;
-}
 
 /* MODAL */
 .modal{
 display:none;
-position:fixed;top:0;left:0;
+position:fixed;
+top:0;left:0;
 width:100%;height:100%;
-background:rgba(0,0,0,0.7);
-justify-content:center;align-items:center;
+background:rgba(0,0,0,0.8);
+justify-content:center;
+align-items:center;
 }
 .modalBox{
-background:#111;padding:20px;width:300px;
+background:#111;
+padding:15px;
+width:300px;
+border-radius:10px;
+}
+
+/* CHECKOUT */
+.checkout{
+display:none;
+position:fixed;
+top:50%;left:50%;
+transform:translate(-50%,-50%);
+background:#111;
+padding:15px;
+width:300px;
+z-index:3000;
+}
+.checkout input{
+width:100%;
+margin:5px 0;
+padding:8px;
 }
 
 /* ADMIN */
 .admin{
 display:none;
-position:fixed;top:50%;left:50%;
+position:fixed;
+top:50%;left:50%;
 transform:translate(-50%,-50%);
-background:#111;padding:20px;width:300px;
+background:#111;
+padding:15px;
+width:300px;
 z-index:3000;
 }
-.admin input,select{width:100%;margin:5px 0;padding:8px;}
+.admin input,select{
+width:100%;
+margin:5px 0;
+padding:8px;
+}
 
 /* ABOUT */
-.about{text-align:center;padding:40px;}
+.about{
+padding:30px;
+text-align:center;
+}
 
 /* FOOTER */
 footer{
-text-align:center;
-padding:20px;
 background:black;
+text-align:center;
+padding:15px;
 margin-top:20px;
 }
 </style>
@@ -116,85 +188,116 @@ margin-top:20px;
 
 <body>
 
+<!-- NAV -->
 <nav>
 <div class="logo">SANJHEX</div>
-<div class="menu" onclick="adminLogin()">👑</div>
+<div class="menu" onclick="adminLogin()">☰</div>
 </nav>
 
-<div class="sale">🔥 UPTO 40% OFF ON ALL PRODUCTS 🔥</div>
+<div class="cartBtn" onclick="toggleCart()">🛒</div>
 
+<!-- SALE -->
+<div class="sale">🔥 UPTO 50% OFF | HURRY UP WE ARE LIVE 🔥</div>
+
+<!-- HERO -->
 <div class="hero">
-<h1>Wear Your <span>Attitude Luxury on Threads</span></h1>
+<h1>Wear Your <span>Attitude</span></h1>
 </div>
 
-<div class="filters">
-<button onclick="filter('all')">All</button>
-<button onclick="filter('men')">Men</button>
-<button onclick="filter('women')">Women</button>
-<button onclick="filter('combo')">Combo</button>
+<!-- CATEGORY -->
+<div class="category">
+<div class="catCard" onclick="openCat('men')">
+<img src="https://images.unsplash.com/photo-1520975916090-3105956dac38">
 </div>
 
+<div class="catCard" onclick="openCat('women')">
+<img src="https://images.unsplash.com/photo-1520975928318-4d5a5d3c7bde">
+</div>
+
+<div class="catCard" onclick="openCat('combo')">
+<img src="https://images.unsplash.com/photo-1520975869018-8c3c5c0c2f6c">
+</div>
+</div>
+
+<!-- PRODUCTS -->
 <div class="grid" id="grid"></div>
 
-<div class="cartBtn" onclick="toggleCart()">🛒</div>
+<!-- CART -->
 <div class="cart" id="cart"></div>
 
 <!-- MODAL -->
 <div class="modal" id="modal" onclick="closeModal()">
-<div class="modalBox" id="modalBox" onclick="event.stopPropagation()"></div>
+<div class="modalBox" onclick="event.stopPropagation()"></div>
+</div>
+
+<!-- CHECKOUT -->
+<div class="checkout" id="checkout">
+<h3>Order Details</h3>
+<input id="name" placeholder="Name">
+<input id="address" placeholder="Address">
+<input id="phone" placeholder="Mobile">
+<input id="email" placeholder="Email">
+<button onclick="placeOrder()">Submit</button>
 </div>
 
 <!-- ADMIN -->
 <div class="admin" id="admin">
-<h3>Add Product</h3>
+<h3>Admin Login</h3>
+<input id="code" placeholder="Enter Code">
+<button onclick="checkAdmin()">Login</button>
+
+<div id="adminPanel" style="display:none">
+<h4>Add Product</h4>
 <input id="pname" placeholder="Name">
 <input id="pprice" placeholder="Price">
-<input id="pimg" placeholder="Image URL">
+<input id="pimg" placeholder="Image">
 <select id="pcat">
-<option value="men">Men</option>
-<option value="women">Women</option>
-<option value="combo">Combo</option>
+<option>men</option>
+<option>women</option>
+<option>combo</option>
 </select>
 <button onclick="addProduct()">Add</button>
 
-<div id="adminList"></div>
+<h4>Orders</h4>
+<div id="orders"></div>
+</div>
 </div>
 
 <!-- ABOUT -->
 <div class="about">
 <h2>About SANJHEX</h2>
-<p>Premium streetwear brand focused on luxury oversized fashion. SANJHEX show your personality , our products are a very luxury quality , Luxury on tread , Sanjhex is unit of lyzonix Technologies</p>
+<p>Premium streetwear brand focused on luxury identity fashion. Built for attitude, confidence and modern youth culture.</p>
 </div>
 
 <footer>© 2026 SANJHEX | Lyzonix Technologies</footer>
 
 <script>
 
-let products=JSON.parse(localStorage.getItem("products"))||[];
+let products=[];
 let cart=[];
-let current="all";
+let current="";
 
-function save(){localStorage.setItem("products",JSON.stringify(products));}
+let orders=JSON.parse(localStorage.getItem("orders"))||[];
 
-/* FILTER */
-function filter(cat){
+/* CATEGORY */
+function openCat(cat){
 current=cat;
 render();
 }
 
-/* RENDER */
+/* RENDER PRODUCTS */
 function render(){
 let grid=document.getElementById("grid");
 grid.innerHTML="";
 
 products.forEach((p,i)=>{
-if(current==="all"||p.cat===current){
+if(p.cat===current){
 grid.innerHTML+=`
 <div class="card">
 <img src="${p.img}" onclick="openProduct(${i})">
 <h3>${p.name}</h3>
-<p>₹${p.price}</p>
-<button onclick="addToCart(${i})">Add</button>
+<button onclick="addToCart(${i})">Add to Cart</button>
+<button onclick="buyNow(${i})">Buy Now</button>
 </div>`;
 }
 });
@@ -204,91 +307,105 @@ grid.innerHTML+=`
 function openProduct(i){
 let p=products[i];
 modal.style.display="flex";
-modalBox.innerHTML=`
-<h2>${p.name}</h2>
+
+document.querySelector(".modalBox").innerHTML=`
+<h3>${p.name}</h3>
 <img src="${p.img}" style="width:100%">
-<p>₹${p.price}</p>
-<button onclick="addToCart(${i})">Add to Cart</button>`;
+<button onclick="addToCart(${i})">Add to Cart</button>
+<button onclick="buyNow(${i})">Buy Now</button>
+`;
 }
+
 function closeModal(){modal.style.display="none";}
 
 /* CART */
 function addToCart(i){
-let found=cart.find(c=>c.name===products[i].name);
-if(found){found.qty++;}else{cart.push({...products[i],qty:1});}
+cart.push(products[i]);
 renderCart();
 }
 
 function renderCart(){
 let box=document.getElementById("cart");
 
-if(cart.length==0){box.innerHTML="Cart Empty";return;}
-
-let total=0;
-box.innerHTML="<h2>Cart</h2>";
-
-cart.forEach((c,i)=>{
-total+=c.price*c.qty;
-box.innerHTML+=`
-<div>
-${c.name} x${c.qty} - ₹${c.price*c.qty}
-<button onclick="removeItem(${i})">Remove</button>
-</div>`;
-});
-
-box.innerHTML+=`<h3>Total ₹${total}</h3>`;
+if(cart.length==0){
+box.innerHTML="<h3>Cart is empty</h3>";
+return;
 }
 
-function removeItem(i){cart.splice(i,1);renderCart();}
+let total=0;
+box.innerHTML="<h3>Cart</h3>";
+
+cart.forEach((c,i)=>{
+total+=Number(c.price);
+box.innerHTML+=`
+<div>${c.name} - ₹${c.price}</div>
+`;
+});
+
+box.innerHTML+=`<h3>Total ₹${total}</h3>
+<button onclick="openCheckout()">Checkout</button>`;
+}
 
 function toggleCart(){
 document.getElementById("cart").classList.toggle("open");
 }
 
+/* CHECKOUT */
+function openCheckout(){
+document.getElementById("checkout").style.display="block";
+}
+
+function placeOrder(){
+orders.push({
+name:name.value,
+address:address.value,
+phone:phone.value,
+email:email.value,
+time:new Date().toLocaleString()
+});
+
+localStorage.setItem("orders",JSON.stringify(orders));
+
+alert("🎉 Order Successfully Placed");
+checkout.style.display="none";
+cart=[];
+renderCart();
+}
+
 /* ADMIN */
 function adminLogin(){
-let pass=prompt("Code?");
-if(pass==="SANJHEX123"){
 admin.style.display="block";
-renderAdminList();
+}
+
+function checkAdmin(){
+if(code.value==="SANJHEX123"){
+adminPanel.style.display="block";
+showOrders();
 }
 }
 
 function addProduct(){
-if(!pname.value||!pprice.value||!pimg.value){
-alert("Fill all fields");return;
-}
-
 products.push({
 name:pname.value,
-price:Number(pprice.value),
+price:pprice.value,
 img:pimg.value,
 cat:pcat.value
 });
 
-pname.value="";pprice.value="";pimg.value="";
-save();render();renderAdminList();
+render();
 }
 
-function renderAdminList(){
-let box=document.getElementById("adminList");
+function showOrders(){
+let box=document.getElementById("orders");
 box.innerHTML="";
 
-products.forEach((p,i)=>{
+orders.forEach(o=>{
 box.innerHTML+=`
-<div>
-${p.name}
-<button onclick="deleteProduct(${i})">Delete</button>
+<div style="border:1px solid #333;margin:5px;padding:5px">
+${o.name}<br>${o.phone}<br>${o.address}
 </div>`;
 });
 }
-
-function deleteProduct(i){
-products.splice(i,1);
-save();render();renderAdminList();
-}
-
-render();
 
 </script>
 
