@@ -3,220 +3,86 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SANJHEX | Luxury Store</title>
+<title>SANJHEX Store</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Poppins;}
 
-body{
-background:#05060a;
-color:white;
-overflow-x:hidden;
-}
+body{background:#0b0c10;color:white;}
 
-/* BACKGROUND */
-body::before{
-content:"";
-position:fixed;
-width:200%;
-height:200%;
-background:
-radial-gradient(circle at 20% 20%,rgba(255,0,204,0.15),transparent),
-radial-gradient(circle at 80% 40%,rgba(0,255,242,0.12),transparent);
-animation:move 10s infinite alternate;
-z-index:-1;
-}
-
-@keyframes move{
-0%{transform:translate(0,0);}
-100%{transform:translate(40px,60px);}
-}
-
-/* NAV */
 nav{
-position:fixed;
-top:0;
-width:100%;
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:15px 25px;
-background:rgba(0,0,0,0.6);
-backdrop-filter:blur(15px);
-z-index:2000;
+display:flex;justify-content:space-between;
+padding:15px;background:black;
+position:fixed;width:100%;top:0;
 }
 
-.logo{
-font-size:24px;
-font-weight:900;
-background:linear-gradient(45deg,#00fff2,#ff00cc);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-}
+.logo{font-weight:800;color:#00fff2;}
 
-.menu{font-size:26px;cursor:pointer;}
-
-/* SIDE MENU */
-.side{
-position:fixed;
-top:0;
-right:-260px;
-width:260px;
-height:100%;
-background:#111;
-padding:20px;
-transition:0.4s;
-z-index:3000;
-}
-.side.open{right:0;}
-
-.side a{
-display:block;
-color:white;
-margin:20px 0;
-cursor:pointer;
-}
-
-/* OVERLAY */
-.overlay{
-position:fixed;
-top:0;left:0;
-width:100%;height:100%;
-background:rgba(0,0,0,0.6);
-display:none;
-z-index:2500;
-}
-
-/* HERO */
 .hero{
-height:100vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-text-align:center;
+margin-top:60px;
+text-align:center;padding:60px;
 }
 
-.hero h1{
-font-size:50px;
-animation:glow 2s infinite alternate;
-}
-.hero span{color:#ff00cc;}
-
-@keyframes glow{
-0%{text-shadow:0 0 10px #ff00cc;}
-100%{text-shadow:0 0 30px #00fff2;}
-}
-
-/* SALE BADGE */
-.sale{
-margin-top:80px;
-text-align:center;
-font-weight:900;
-font-size:16px;
-letter-spacing:2px;
-background:linear-gradient(90deg,#ffcc00,#ff0055,#00fff2,#ffffff);
-background-size:300% 300%;
-animation:flow 2s infinite linear;
-padding:10px;
-}
-
-@keyframes flow{
-0%{background-position:0% 50%;}
-50%{background-position:100% 50%;}
-100%{background-position:0% 50%;}
-}
-
-/* SECTION */
-.section{
-padding:80px 20px;
-text-align:center;
-}
-
-.section h2{
-font-size:40px;
-color:#00fff2;
-margin-bottom:20px;
-}
-
-/* GRID */
 .grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:20px;
+gap:20px;padding:20px;
 }
 
 .card{
-background:rgba(255,255,255,0.05);
-border-radius:15px;
-overflow:hidden;
+background:#111;padding:10px;border-radius:10px;
 transition:0.3s;
-cursor:pointer;
 }
-
 .card:hover{transform:scale(1.03);}
 
-.card img{
-width:100%;
-height:220px;
-object-fit:cover;
-}
+.card img{width:100%;height:200px;object-fit:cover;}
 
-.price{
-color:#00fff2;
-margin:5px 0;
+button{
+width:100%;margin-top:5px;padding:8px;
+border:none;border-radius:20px;
+background:linear-gradient(45deg,#ff00cc,#00fff2);
+cursor:pointer;
 }
 
 /* CART */
-.cartBtn{
-position:fixed;
-right:20px;
-bottom:20px;
-background:#ff00cc;
-padding:12px 16px;
-border-radius:30px;
-cursor:pointer;
-z-index:5000;
-}
-
 .cart{
-position:fixed;
-right:-320px;
-top:0;
-width:300px;
-height:100%;
-background:#111;
-padding:15px;
-transition:0.4s;
-z-index:4000;
-overflow:auto;
+position:fixed;right:-320px;top:0;
+width:300px;height:100%;
+background:#111;padding:10px;
+transition:.3s;overflow:auto;
 }
 .cart.open{right:0;}
 
-/* ABOUT */
-.about{
-padding:80px 20px;
-text-align:center;
-opacity:0.9;
+.cartBtn{
+position:fixed;bottom:20px;right:20px;
+background:#ff00cc;padding:10px;border-radius:30px;
+cursor:pointer;
 }
 
-footer{
-text-align:center;
-padding:20px;
-background:#000;
-opacity:0.8;
-margin-top:30px;
+/* ADMIN */
+.admin{
+display:none;
+position:fixed;top:50%;left:50%;
+transform:translate(-50%,-50%);
+background:#111;padding:20px;width:300px;
+z-index:1000;
 }
-button{
-margin-top:10px;
-width:100%;
-padding:8px;
-border:none;
-border-radius:20px;
-background:linear-gradient(45deg,#ff00cc,#00fff2);
-cursor:pointer;
+.admin input,select{
+width:100%;margin:5px 0;padding:8px;
+}
+
+/* MODAL */
+.modal{
+display:none;
+position:fixed;top:0;left:0;
+width:100%;height:100%;
+background:rgba(0,0,0,0.8);
+justify-content:center;align-items:center;
+}
+.modalBox{
+background:#111;padding:20px;width:300px;
 }
 </style>
 </head>
@@ -225,149 +91,167 @@ cursor:pointer;
 
 <nav>
 <div class="logo">SANJHEX</div>
-<div class="menu" onclick="toggleMenu()">☰</div>
+<div onclick="adminLogin()">👑</div>
 </nav>
 
-<div class="overlay" id="overlay" onclick="closeAll()"></div>
-
-<!-- SIDE MENU -->
-<div class="side" id="side">
-<a onclick="filter('all')">Home</a>
-<a onclick="filter('men')">Men (<span id="menCount">0</span>)</a>
-<a onclick="filter('women')">Women (<span id="womenCount">0</span>)</a>
-<a onclick="filter('combo')">Combo (<span id="comboCount">0</span>)</a>
-  <a onclick="adminLogin()">Owner Login</a>
-</div>
-
-<!-- HERO -->
 <div class="hero">
-<h1>Wear Your <span>Attitude</span></h1>
-<p>Luxury Streetwear Brand , SANJHEX SHOW UR PERSONALITY</p>
+<h1>Luxury Streetwear SANJHEX Show your personality</h1>
 </div>
 
-<!- SALE -->-
-<div class="sale">🔥 UPTO 50% OFF | LIMITED TIME SALE 🔥</div>
-
-<!-- PRODUCTS -->
-<div class="section">
-<h2>Products</h2>
 <div class="grid" id="grid"></div>
-</div>
 
-<!-- ABOUT -->
-<div class="about">
-<h2>About SANJHEX</h2>
-<p>SANJHEX is a premium streetwear brand focused on oversized fashion, modern luxury, and bold identity clothing for men, women, and combo outfits.SANJHEX Shoe your personality, Luxury at all side , luxry on thread.</p>
-</div>
-
-<!-- CART -->
-<div class="cartBtn" onclick="toggleCart()">🛒 Cart</div>
+<div class="cartBtn" onclick="toggleCart()">🛒</div>
 <div class="cart" id="cart"></div>
 
-<footer>© 2026 SANJHEX | Lyzonix Technologies</footer>
+<!-- ADMIN -->
+<div class="admin" id="admin">
+<h3>Add Product</h3>
+<input id="pname" placeholder="Name">
+<input id="pprice" placeholder="Price">
+<input id="pimg" placeholder="Image URL">
+<select id="pcat">
+<option value="men">Men</option>
+<option value="women">Women</option>
+<option value="combo">Combo</option>
+</select>
+<button onclick="addProduct()">Add</button>
+
+<div id="adminList"></div>
+</div>
+
+<!-- PRODUCT MODAL -->
+<div class="modal" id="modal">
+<div class="modalBox" id="modalBox"></div>
+</div>
 
 <script>
 
-let products=[
-{cat:"men",name:"Men Streetwear",price:1999,img:"https://images.unsplash.com/photo-1520975916090-3105956dac38"},
-{cat:"women",name:"Women Streetwear",price:1799,img:"https://images.unsplash.com/photo-1520975928318-4d5a5d3c7bde"},
-{cat:"combo",name:"Couple Combo",price:2999,img:"https://images.unsplash.com/photo-1520975869018-8c3c5c0c2f6c"}
-];
-
+let products = JSON.parse(localStorage.getItem("products")) || [];
 let cart=[];
-let current="all";
 
-const side=document.getElementById("side");
-const overlay=document.getElementById("overlay");
-const cartBox=document.getElementById("cart");
-
-  function adminLogin(){
-let pass = prompt("Enter Owner Code:");
-
-if(pass === "SANJHEX123"){
-openAdminPanel();
-}else{
-alert("Wrong Code ❌");
+/* SAVE */
+function save(){
+localStorage.setItem("products",JSON.stringify(products));
 }
-  }
-  function renderAdminList(){
-let box=document.getElementById("adminList");
-box.innerHTML="<h4>Products</h4>";
+
+/* RENDER PRODUCTS */
+function render(){
+let grid=document.getElementById("grid");
+grid.innerHTML="";
 
 products.forEach((p,i)=>{
-box.innerHTML+=`
-<div style="border:1px solid #333;padding:8px;margin:5px 0">
-${p.name} - ₹${p.price}
-<br>
-<button onclick="deleteProduct(${i})">Delete</button>
+grid.innerHTML+=`
+<div class="card">
+<img src="${p.img}" onclick="openProduct(${i})">
+<h3>${p.name}</h3>
+<p>₹${p.price}</p>
+<button onclick="addToCart(${i})">Add to Cart</button>
 </div>
 `;
 });
-  }
-
-/* MENU */
-function toggleMenu(){
-side.classList.toggle("open");
-overlay.style.display="block";
 }
 
-/* CLOSE */
-function closeAll(){
-side.classList.remove("open");
-cartBox.classList.remove("open");
-overlay.style.display="none";
+/* PRODUCT VIEW */
+function openProduct(i){
+let p=products[i];
+
+modal.style.display="flex";
+modalBox.innerHTML=`
+<h2>${p.name}</h2>
+<img src="${p.img}" style="width:100%">
+<p>₹${p.price}</p>
+<button onclick="addToCart(${i})">Add to Cart</button>
+<button onclick="closeModal()">Close</button>
+`;
 }
 
-/* FILTER */
-function filter(cat){
-current=cat;
-render();
-closeAll();
+function closeModal(){
+modal.style.display="none";
 }
 
 /* CART */
-function toggleCart(){
-cartBox.classList.toggle("open");
-overlay.style.display="block";
+function addToCart(i){
+let found=cart.find(c=>c.name===products[i].name);
+if(found){found.qty++;}
+else{cart.push({...products[i],qty:1});}
 renderCart();
 }
 
-/* CART */
 function renderCart(){
+let box=document.getElementById("cart");
+
 if(cart.length===0){
-cartBox.innerHTML=`
-<h3 style="padding:10px">Cart is empty 🛒</h3>
-<button onclick="feedback()">Give Feedback</button>
-`;
+box.innerHTML="<h3>Cart Empty</h3>";
 return;
 }
 
-cartBox.innerHTML="<h2 style='padding:10px;color:#00fff2'>Cart</h2>" +
-cart.map(c=>`
-<div style="padding:10px;border-bottom:1px solid #333">
-${c.name} - ₹${c.price}
+let total=0;
+box.innerHTML="<h2>Cart</h2>";
+
+cart.forEach((c,i)=>{
+total+=c.price*c.qty;
+
+box.innerHTML+=`
+<div>
+${c.name} 
+<br>
+Qty: 
+<button onclick="changeQty(${i},-1)">-</button>
+${c.qty}
+<button onclick="changeQty(${i},1)">+</button>
+<br>
+₹${c.price*c.qty}
+<button onclick="removeItem(${i})">Remove</button>
 </div>
-`).join("");
+`;
+});
+
+box.innerHTML+=`<h3>Total ₹${total}</h3>
+<button onclick="checkout()">Buy Now</button>`;
 }
 
-/* FEEDBACK */
-function feedback(){
-alert("Thanks for feedback ❤️");
-}
-
-/* ADD CART */
-function addToCart(i){
-cart.push(products[i]);
+function changeQty(i,val){
+cart[i].qty+=val;
+if(cart[i].qty<=0) cart.splice(i,1);
 renderCart();
 }
-  function openAdminPanel(){
+
+function removeItem(i){
+cart.splice(i,1);
+renderCart();
+}
+
+function toggleCart(){
+document.getElementById("cart").classList.toggle("open");
+}
+
+/* CHECKOUT */
+function checkout(){
+alert("Order Placed Successfully ✅");
+cart=[];
+renderCart();
+}
+
+/* ADMIN */
+function adminLogin(){
+let pass=prompt("Enter Owner Code");
+if(pass==="SANJHEX123"){
 document.getElementById("admin").style.display="block";
 renderAdminList();
-  }
-  function addProduct(){
+}else{
+alert("Wrong Code ❌");
+}
+}
+
+function addProduct(){
+if(!pname.value || !pprice.value || !pimg.value){
+alert("Fill all fields ❌");
+return;
+}
+
 products.push({
 name:pname.value,
-price:pprice.value,
+price:Number(pprice.value),
 img:pimg.value,
 cat:pcat.value
 });
@@ -376,44 +260,33 @@ pname.value="";
 pprice.value="";
 pimg.value="";
 
+save();
 render();
 renderAdminList();
-  }
+}
 
-/* RENDER */
-function render(){
-
-let men=0,women=0,combo=0;
-
-document.getElementById("grid").innerHTML="";
+function renderAdminList(){
+let box=document.getElementById("adminList");
+box.innerHTML="<h4>Products</h4>";
 
 products.forEach((p,i)=>{
-
-if(p.cat==="men") men++;
-if(p.cat==="women") women++;
-if(p.cat==="combo") combo++;
-
-if(current==="all" || current===p.cat){
-
-document.getElementById("grid").innerHTML+=`
-<div class="card" onclick="addToCart(${i})">
-<img src="${p.img}">
-<h3>${p.name}</h3>
-<div class="price">₹${p.price}</div>
+box.innerHTML+=`
+<div>
+${p.name} ₹${p.price}
+<button onclick="deleteProduct(${i})">Delete</button>
 </div>
 `;
-}
 });
+}
 
-menCount.innerText=men;
-womenCount.innerText=women;
-comboCount.innerText=combo;
+function deleteProduct(i){
+products.splice(i,1);
+save();
+render();
+renderAdminList();
 }
 
 render();
-
-/* overlay */
-overlay.onclick=closeAll;
 
 </script>
 
