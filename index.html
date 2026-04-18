@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>SANJHEX PRO STORE</title>
+<title>SANJHEX</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
 
@@ -10,7 +10,7 @@
 body{
 margin:0;
 font-family:Poppins;
-background:#0b0b0b;
+background:#0a0a0a;
 color:white;
 overflow-x:hidden;
 }
@@ -27,32 +27,31 @@ z-index:100;
 }
 
 /* SEARCH */
-input{
-padding:8px;
-border-radius:10px;
-border:none;
-margin:5px;
-width:90%;
-}
-
-/* MENU */
-.menu{
-display:flex;
-justify-content:center;
-gap:10px;
+.search{
+text-align:center;
 padding:10px;
 }
-.menu button{
-background:#1a1a1a;
+.search input{
+padding:10px;
+width:80%;
+border-radius:10px;
 border:none;
-padding:8px 15px;
-border-radius:20px;
-color:white;
-cursor:pointer;
-transition:0.3s;
 }
-.menu button:hover{
-background:#ff3c3c;
+
+/* SALE */
+.sale{
+background:linear-gradient(90deg,#ff0000,#ff9900,#ff00ff);
+padding:8px;
+overflow:hidden;
+white-space:nowrap;
+}
+.sale span{
+display:inline-block;
+animation:move 10s linear infinite;
+}
+@keyframes move{
+0%{transform:translateX(100%)}
+100%{transform:translateX(-100%)}
 }
 
 /* BANNER */
@@ -61,13 +60,13 @@ height:180px;
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:24px;
+font-size:26px;
 font-weight:800;
 background:linear-gradient(270deg,#ff0000,#ff9900,#ff00ff);
 background-size:600% 600%;
-animation:move 6s infinite;
+animation:grad 6s infinite;
 }
-@keyframes move{
+@keyframes grad{
 0%{background-position:0% 50%}
 50%{background-position:100% 50%}
 100%{background-position:0% 50%}
@@ -95,16 +94,35 @@ height:170px;
 object-fit:cover;
 }
 
+.card div{
+padding:10px;
+}
+
 /* BUTTON */
 button{
 background:#ff3c3c;
 border:none;
 color:white;
 padding:8px;
-border-radius:10px;
+border-radius:8px;
 cursor:pointer;
-margin:5px;
+margin:3px;
 }
+
+/* CART DRAWER */
+.cart{
+position:fixed;
+right:-400px;
+top:0;
+width:320px;
+height:100%;
+background:#111;
+transition:0.3s;
+padding:15px;
+overflow:auto;
+z-index:200;
+}
+.cart.active{right:0}
 
 /* MODAL */
 .modal{
@@ -116,19 +134,12 @@ display:none;
 justify-content:center;
 align-items:center;
 }
-
 .box{
 background:#111;
 padding:20px;
 border-radius:12px;
 width:90%;
-max-width:400px;
-animation:pop 0.25s ease;
-}
-
-@keyframes pop{
-from{transform:scale(0.8);opacity:0}
-to{transform:scale(1);opacity:1}
+max-width:420px;
 }
 
 /* ADMIN BTN */
@@ -141,53 +152,33 @@ padding:15px;
 border-radius:50%;
 cursor:pointer;
 }
-
-/* FOOTER */
-footer{
-background:#111;
-padding:20px;
-text-align:center;
-font-size:12px;
-color:#aaa;
-margin-top:20px;
-}
 </style>
-
 </head>
 
 <body>
 
 <header>
 <h2>SANJHEX 🔥</h2>
-<div onclick="openModal('cartModal')">🛒 <span id="count">0</span></div>
+<div onclick="toggleCart()">🛒 <span id="count">0</span></div>
 </header>
 
-<!-- BANNER -->
-<div class="banner">🔥 LIMITED DROP - SANJHEX 2026 COLLECTION</div>
-
-<!-- SEARCH -->
-<div style="text-align:center;padding:10px;">
-<input id="search" placeholder="Search products..." onkeyup="searchProduct()">
+<div class="sale">
+<span>🔥 LIMITED DROP - UPTO 50% OFF - SANJHEX LIVE NOW 🔥</span>
 </div>
 
-<!-- MENU -->
-<div class="menu">
-<button onclick="filter('all')">All</button>
-<button onclick="filter('men')">Men</button>
-<button onclick="filter('women')">Women</button>
-<button onclick="filter('combo')">Combo</button>
+<div class="banner">SANJHEX LUXURY STREETWEAR</div>
+
+<div class="search">
+<input id="search" placeholder="Search products..." onkeyup="search()">
 </div>
 
-<!-- PRODUCTS -->
 <div class="products" id="products"></div>
 
-<!-- CART -->
-<div class="modal" id="cartModal">
-<div class="box">
+<!-- CART DRAWER -->
+<div class="cart" id="cart">
 <h3>Cart</h3>
 <div id="cartItems"></div>
-<button onclick="openModal('checkoutModal')">Checkout COD</button>
-</div>
+<button onclick="checkout()">Checkout</button>
 </div>
 
 <!-- CHECKOUT -->
@@ -201,52 +192,48 @@ margin-top:20px;
 </div>
 </div>
 
+<!-- PRODUCT DETAIL -->
+<div class="modal" id="detailModal">
+<div class="box">
+<img id="dimg" style="width:100%;border-radius:10px">
+<h3 id="dname"></h3>
+<p id="dprice"></p>
+<p id="ddesc">Premium streetwear quality product.</p>
+<button onclick="addFromDetail()">Add to Cart</button>
+</div>
+</div>
+
 <!-- ADMIN -->
 <div class="modal" id="adminModal">
 <div class="box">
 <h3>Admin Panel</h3>
-
-<input id="pname" placeholder="Product Name">
+<input id="pname" placeholder="Name">
 <input id="pprice" placeholder="Price">
-<select id="pcat">
-<option value="men">Men</option>
-<option value="women">Women</option>
-<option value="combo">Combo</option>
-</select>
-<input type="file" id="pimg">
-
-<button onclick="addProduct()">Upload Product</button>
+<input id="pimg" placeholder="Image URL">
+<button onclick="addProduct()">Add Product</button>
 
 <hr>
 <div id="orders"></div>
 </div>
 </div>
 
-<div class="adminBtn" onclick="adminLogin()">⚙️</div>
-
-<footer>
-© SANJHEX | Powered by Lyzonix Technologies
-</footer>
+<div class="adminBtn" onclick="admin()">⚙️</div>
 
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyA9ERbGEbNoEr-3_CxdC-yzXlKx6UO_iqw",
-  authDomain: "sanjhex-55029.firebaseapp.com",
-  projectId: "sanjhex-55029",
-  storageBucket: "sanjhex-55029.firebasestorage.app"
-};
+const app = initializeApp({
+apiKey:"AIzaSyA9ERbGEbNoEr-3_CxdC-yzXlKx6UO_iqw",
+authDomain:"sanjhex-55029.firebaseapp.com",
+projectId:"sanjhex-55029"
+});
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const storage = getStorage(app);
+const db=getFirestore(app);
 
-let products=[];
-let cart=[];
+let products=[],cart=[];
+let currentProduct=null;
 
 /* LOAD */
 async function load(){
@@ -263,8 +250,8 @@ box.innerHTML="";
 products.forEach(p=>{
 box.innerHTML+=`
 <div class="card">
-<img src="${p.img}">
-<div style="padding:10px">
+<img src="${p.img}" onclick='openDetail("${p.id}")'>
+<div>
 <h4>${p.name}</h4>
 <p>₹${p.price}</p>
 <button onclick="add('${p.id}')">Add</button>
@@ -275,32 +262,15 @@ document.getElementById("count").innerText=cart.length;
 }
 
 /* SEARCH */
-window.searchProduct=()=>{
-let val=document.getElementById("search").value.toLowerCase();
-let filtered=products.filter(p=>p.name.toLowerCase().includes(val));
-let box=document.getElementById("products");
-box.innerHTML="";
-filtered.forEach(p=>{
-box.innerHTML+=`
-<div class="card">
-<img src="${p.img}">
-<h4>${p.name}</h4>
-<p>₹${p.price}</p>
-</div>`;
-});
-};
-
-/* FILTER */
-window.filter=(cat)=>{
-let f=cat==="all"?products:products.filter(p=>p.cat===cat);
-let box=document.getElementById("products");
-box.innerHTML="";
+window.search=()=>{
+let v=document.getElementById("search").value.toLowerCase();
+let f=products.filter(p=>p.name.toLowerCase().includes(v));
+document.getElementById("products").innerHTML="";
 f.forEach(p=>{
-box.innerHTML+=`
+document.getElementById("products").innerHTML+=`
 <div class="card">
 <img src="${p.img}">
-<h4>${p.name}</h4>
-<p>₹${p.price}</p>
+<div><h4>${p.name}</h4><p>₹${p.price}</p></div>
 </div>`;
 });
 };
@@ -311,15 +281,39 @@ cart.push(products.find(p=>p.id==id));
 render();
 };
 
-window.openModal=(id)=>{
-document.getElementById(id).style.display="flex";
+window.toggleCart=()=>{
+document.getElementById("cart").classList.toggle("active");
+updateCart();
 };
 
-document.querySelectorAll(".modal").forEach(m=>{
-m.onclick=e=>{if(e.target===m)m.style.display="none";}
-});
+function updateCart(){
+let box=document.getElementById("cartItems");
+if(cart.length==0){box.innerHTML="Cart Empty";}
+else{
+box.innerHTML=cart.map(c=>`<p>${c.name} - ₹${c.price}</p>`).join("");
+}
+}
 
-/* ORDER */
+/* DETAIL */
+window.openDetail=(id)=>{
+currentProduct=products.find(p=>p.id==id);
+dimg.src=currentProduct.img;
+dname.innerText=currentProduct.name;
+dprice.innerText="₹"+currentProduct.price;
+document.getElementById("detailModal").style.display="flex";
+};
+
+window.addFromDetail=()=>{
+cart.push(currentProduct);
+render();
+document.getElementById("detailModal").style.display="none";
+};
+
+/* CHECKOUT */
+window.checkout=()=>{
+document.getElementById("checkoutModal").style.display="flex";
+};
+
 window.placeOrder=async()=>{
 await addDoc(collection(db,"orders"),{
 name:name.value,
@@ -330,32 +324,26 @@ status:"Pending"
 });
 alert("Order Placed");
 cart=[];
+render();
 };
 
 /* ADMIN */
-window.adminLogin=()=>{
-let pass=prompt("Admin Password");
-if(pass==="admin123"){
-openModal('adminModal');
+window.admin=()=>{
+let p=prompt("Admin Password");
+if(p==="admin123"){
+document.getElementById("adminModal").style.display="flex";
 loadOrders();
 }
 };
 
 /* ADD PRODUCT */
 window.addProduct=async()=>{
-let file=pimg.files[0];
-let s=ref(storage,"p/"+file.name);
-await uploadBytes(s,file);
-let url=await getDownloadURL(s);
-
 await addDoc(collection(db,"products"),{
 name:pname.value,
 price:pprice.value,
-cat:pcat.value,
-img:url
+img:pimg.value
 });
-
-alert("Product Added");
+alert("Added");
 load();
 };
 
