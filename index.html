@@ -254,6 +254,16 @@ const db = getFirestore(app);
 let products=[];
 let cart=[];
 
+  /* PRODUCT */
+  products.push({
+name: "Soft Pink Aesthetic Top",
+price: 899,
+img: "./00000000233072069f6950b343c9d19b.png",
+cat: "women",
+brand: "Sanjhex",
+desc: "Luxury streetwear top, cotton fabric, all size available"
+});
+
 /* LOAD */
 async function load(){
 let snap = await getDocs(collection(db,"products"));
@@ -280,6 +290,27 @@ box.innerHTML+=`
 document.getElementById("count").innerText=cart.length;
 }
 
+  function render(list=products){
+let box=document.getElementById("products");
+box.innerHTML="";
+
+list.forEach(p=>{
+box.innerHTML+=`
+<div class="card">
+<img src="${p.img}" onerror="this.src='https://via.placeholder.com/300'">
+<div style="padding:10px">
+<h4>${p.name}</h4>
+<p>₹${p.price}</p>
+<p style="font-size:12px;opacity:0.7">${p.desc}</p>
+
+<button onclick='add(${JSON.stringify(p)})'>
+Add to Cart
+</button>
+
+</div>
+</div>`;
+});
+  }
 /* FILTER */
 window.filter=(cat)=>{
 render(products.filter(p=>p.cat===cat));
