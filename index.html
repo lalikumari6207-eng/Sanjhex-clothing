@@ -2,81 +2,93 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>SANJHEX ULTRA PRO MAX</title>
+<title>SANJHEX ULTRA LUXE</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700;900&display=swap" rel="stylesheet">
 
 <style>
+html{scroll-behavior:smooth;}
 body{
 margin:0;
 font-family:Poppins;
 background:#0a0a0a;
 color:white;
-overflow-x:hidden;
-scroll-behavior:smooth;
 }
 
-/* HEADER */
-header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:15px;
-background:rgba(0,0,0,0.6);
-backdrop-filter:blur(10px);
+/* NAV */
+nav{
 position:sticky;
 top:0;
+display:flex;
+justify-content:space-between;
+padding:15px 20px;
+background:rgba(0,0,0,0.6);
+backdrop-filter:blur(10px);
 z-index:100;
 }
 
-/* HERO */
-.hero{
-height:220px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:24px;
-font-weight:800;
-background:linear-gradient(270deg,#ff0000,#ff9900,#ff00ff);
-background-size:600% 600%;
-animation:grad 6s infinite;
-}
-@keyframes grad{
-0%{background-position:0% 50%}
-50%{background-position:100% 50%}
-100%{background-position:0% 50%}
-}
-
-/* SALE */
-.sale{
-background:red;
-white-space:nowrap;
+/* HERO SLIDER */
+.slider{
+height:85vh;
+position:relative;
 overflow:hidden;
-padding:8px;
-}
-.sale span{
-display:inline-block;
-animation:move 10s linear infinite;
-}
-@keyframes move{
-0%{transform:translateX(100%)}
-100%{transform:translateX(-100%)}
 }
 
-/* MENU */
-.menu{
-display:flex;
-justify-content:center;
-gap:10px;
-padding:10px;
+.slide{
+position:absolute;
+width:100%;
+height:100%;
+opacity:0;
+transition:1s;
+background-size:cover;
+background-position:center;
 }
-.menu button{
-background:#1a1a1a;
-border:none;
-padding:10px 15px;
-border-radius:20px;
-color:white;
+
+.slide.active{opacity:1;}
+
+.overlay{
+position:absolute;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.5);
+}
+
+/* CATEGORY */
+.section-title{
+text-align:center;
+padding:40px 20px 10px;
+font-size:26px;
+font-weight:800;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:15px;
+padding:20px;
+}
+
+.cat{
+height:300px;
+position:relative;
+border-radius:15px;
+overflow:hidden;
 cursor:pointer;
+}
+
+.cat img{
+width:100%;
+height:100%;
+object-fit:cover;
+transition:0.5s;
+}
+
+.cat:hover img{transform:scale(1.1);}
+
+.cat h2{
+position:absolute;
+bottom:20px;
+left:20px;
 }
 
 /* PRODUCTS */
@@ -84,30 +96,39 @@ cursor:pointer;
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
 gap:15px;
-padding:15px;
+padding:20px;
 }
 
 .card{
-background:#151515;
+background:#141414;
 border-radius:12px;
 overflow:hidden;
-transition:0.3s;
-cursor:pointer;
 }
-.card:hover{transform:scale(1.04)}
+
 .card img{
 width:100%;
-height:170px;
+height:180px;
 object-fit:cover;
 }
-.card div{padding:10px}
+
+.card div{padding:10px;}
+
+button{
+background:#ff3c3c;
+border:none;
+color:white;
+padding:8px;
+border-radius:8px;
+cursor:pointer;
+margin-top:5px;
+}
 
 /* CART */
 .cart{
 position:fixed;
-right:-350px;
+right:-360px;
 top:0;
-width:300px;
+width:320px;
 height:100%;
 background:#111;
 padding:15px;
@@ -115,24 +136,13 @@ transition:0.3s;
 overflow:auto;
 z-index:200;
 }
-.cart.active{right:0}
+.cart.active{right:0;}
 
-/* MODAL */
-.modal{
-position:fixed;
-top:0;left:0;
-width:100%;height:100%;
-background:rgba(0,0,0,0.7);
-display:none;
-justify-content:center;
-align-items:center;
-}
-.box{
+/* ABOUT */
+.about{
+padding:60px 20px;
+text-align:center;
 background:#111;
-padding:20px;
-border-radius:12px;
-width:90%;
-max-width:420px;
 }
 
 /* ADMIN */
@@ -145,221 +155,125 @@ padding:15px;
 border-radius:50%;
 cursor:pointer;
 }
-
-/* FOOTER */
-footer{
-background:#111;
-padding:20px;
-text-align:center;
-font-size:12px;
-color:#aaa;
-}
 </style>
 </head>
 
 <body>
 
-<header>
-<h3>SANJHEX ULTRA</h3>
+<!-- NAV -->
+<nav>
+<h3>SANJHEX</h3>
 <div onclick="toggleCart()">🛒 <span id="count">0</span></div>
-</header>
+</nav>
 
-<div class="hero">🔥 SANJHEX ULTRA LUXURY STREETWEAR 🔥</div>
-
-<div class="sale">
-<span>🔥 LIMITED DROP - UPTO 50% OFF - SANJHEX LIVE NOW - SELLING FAST 🔥</span>
+<!-- HERO SLIDER -->
+<div class="slider">
+<div class="slide active" style="background-image:url('https://images.unsplash.com/photo-1520975693416-35a0c2b3b5c7')"></div>
+<div class="slide" style="background-image:url('https://images.unsplash.com/photo-1520975958228-3b6c1b4b2c6a')"></div>
+<div class="slide" style="background-image:url('https://images.unsplash.com/photo-1520975922284-9f1b0a2f2a3b')"></div>
+<div class="overlay"></div>
 </div>
 
-<div class="menu">
-<button onclick="filter('all')">All</button>
-<button onclick="filter('men')">Men</button>
-<button onclick="filter('women')">Women</button>
-<button onclick="filter('combo')">Combo</button>
+<h2 class="section-title">SHOP BY CATEGORY</h2>
+
+<!-- CATEGORIES -->
+<div class="grid">
+<div class="cat" onclick="filter('men')">
+<img src="https://images.unsplash.com/photo-1520975693416-35a0c2b3b5c7">
+<h2>MEN</h2>
 </div>
+
+<div class="cat" onclick="filter('women')">
+<img src="https://images.unsplash.com/photo-1520975958228-3b6c1b4b2c6a">
+<h2>WOMEN</h2>
+</div>
+
+<div class="cat" onclick="filter('combo')">
+<img src="https://images.unsplash.com/photo-1520975922284-9f1b0a2f2a3b">
+<h2>COMBO</h2>
+</div>
+</div>
+
+<h2 class="section-title">PRODUCTS</h2>
 
 <div class="products" id="products"></div>
+
+<!-- ABOUT -->
+<div class="about">
+<h2>About SANJHEX</h2>
+<p>
+Luxury streetwear brand inspired by global fashion culture.
+Limited drops, premium quality, bold identity.
+</p>
+</div>
 
 <!-- CART -->
 <div class="cart" id="cart">
 <h3>Your Cart</h3>
 <div id="cartItems"></div>
-<button onclick="checkout()">Checkout COD</button>
-</div>
-
-<!-- PRODUCT DETAIL -->
-<div class="modal" id="detailModal">
-<div class="box">
-<img id="dimg" style="width:100%;border-radius:10px">
-<h3 id="dname"></h3>
-<p id="dprice"></p>
-<button onclick="addFromDetail()">Add to Cart</button>
-</div>
-</div>
-
-<!-- CHECKOUT -->
-<div class="modal" id="checkoutModal">
-<div class="box">
-<h3>COD Order</h3>
-<input id="name" placeholder="Name">
-<input id="phone" placeholder="Phone">
-<input id="address" placeholder="Address">
-<button onclick="placeOrder()">Place Order</button>
-</div>
-</div>
-
-<!-- ADMIN -->
-<div class="modal" id="adminModal">
-<div class="box">
-<h3>Admin Panel</h3>
-<input id="pname" placeholder="Name">
-<input id="pprice" placeholder="Price">
-<input id="pimg" placeholder="Image URL">
-<select id="pcat">
-<option value="men">Men</option>
-<option value="women">Women</option>
-<option value="combo">Combo</option>
-</select>
-<button onclick="addProduct()">Add Product</button>
-<hr>
-<div id="orders"></div>
-</div>
 </div>
 
 <div class="adminBtn" onclick="admin()">⚙️</div>
 
-<footer>© SANJHEX ULTRA | Lyzonix Technologies</footer>
+<script>
+let products=[
+{name:"Oversized Tee",price:999,img:"https://images.unsplash.com/photo-1520975693416-35a0c2b3b5c7",cat:"men"},
+{name:"Women Dress",price:1299,img:"https://images.unsplash.com/photo-1520975958228-3b6c1b4b2c6a",cat:"women"},
+{name:"Couple Set",price:1999,img:"https://images.unsplash.com/photo-1520975922284-9f1b0a2f2a3b",cat:"combo"}
+];
 
-<script type="module">
+let cart=[];
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-const app = initializeApp({
-apiKey:"YOUR_KEY",
-authDomain:"YOUR_DOMAIN",
-projectId:"YOUR_ID"
-});
-
-const db=getFirestore(app);
-
-let products=[],cart=[];
-let current=null;
-
-/* LOAD */
-async function load(){
-let snap=await getDocs(collection(db,"products"));
-products=[];
-snap.forEach(d=>products.push({...d.data(),id:d.id}));
-render();
-}
+/* SLIDER AUTO */
+let i=0;
+setInterval(()=>{
+let slides=document.querySelectorAll(".slide");
+slides.forEach(s=>s.classList.remove("active"));
+i=(i+1)%slides.length;
+slides[i].classList.add("active");
+},3000);
 
 /* RENDER */
-function render(){
+function render(list=products){
 let box=document.getElementById("products");
 box.innerHTML="";
-products.forEach(p=>{
+list.forEach(p=>{
 box.innerHTML+=`
-<div class="card" onclick="openDetail('${p.id}')">
+<div class="card">
 <img src="${p.img}">
 <div>
 <h4>${p.name}</h4>
 <p>₹${p.price}</p>
-<button onclick="event.stopPropagation();add('${p.id}')">Add</button>
+<button onclick="add('${p.name}')">Add to Cart</button>
 </div>
 </div>`;
 });
 document.getElementById("count").innerText=cart.length;
 }
 
-/* FILTER */
-window.filter=(cat)=>{
-let f=cat==="all"?products:products.filter(p=>p.cat===cat);
-document.getElementById("products").innerHTML="";
-f.forEach(p=>{
-document.getElementById("products").innerHTML+=`
-<div class="card">
-<img src="${p.img}">
-<div><h4>${p.name}</h4></div>
-</div>`;
-});
-};
+function filter(cat){
+render(products.filter(p=>p.cat===cat));
+}
 
-/* CART */
-window.add=(id)=>{
-cart.push(products.find(p=>p.id==id));
-render();
-};
+function add(name){
+cart.push(name);
+document.getElementById("count").innerText=cart.length;
+}
 
-window.toggleCart=()=>{
+function toggleCart(){
 document.getElementById("cart").classList.toggle("active");
 document.getElementById("cartItems").innerHTML =
-cart.length ? cart.map(c=>`<p>${c.name}</p>`).join("") : "Cart Empty";
-};
+cart.length?cart.map(c=>`<p>${c}</p>`).join(""):"Cart Empty";
+}
 
-/* DETAIL */
-window.openDetail=(id)=>{
-current=products.find(p=>p.id==id);
-dimg.src=current.img;
-dname.innerText=current.name;
-dprice.innerText="₹"+current.price;
-detailModal.style.display="flex";
-};
-
-window.addFromDetail=()=>{
-cart.push(current);
-render();
-detailModal.style.display="none";
-};
-
-/* CHECKOUT */
-window.checkout=()=>{
-checkoutModal.style.display="flex";
-};
-
-window.placeOrder=async()=>{
-await addDoc(collection(db,"orders"),{
-name:name.value,
-phone:phone.value,
-address:address.value,
-cart,
-status:"Pending"
-});
-alert("Order Placed");
-cart=[];
-load();
-};
-
-/* ADMIN */
-window.admin=()=>{
+function admin(){
 let p=prompt("Admin Password");
 if(p==="admin123"){
-adminModal.style.display="flex";
-loadOrders();
+alert("Admin Mode (demo)");
 }
-};
-
-/* ADD PRODUCT */
-window.addProduct=async()=>{
-await addDoc(collection(db,"products"),{
-name:pname.value,
-price:pprice.value,
-cat:pcat.value,
-img:pimg.value
-});
-load();
-};
-
-/* ORDERS */
-async function loadOrders(){
-let snap=await getDocs(collection(db,"orders"));
-orders.innerHTML="";
-snap.forEach(d=>{
-orders.innerHTML+=`<p>${d.data().name} - ${d.data().status}</p>`;
-});
 }
 
-load();
-
+render();
 </script>
 
 </body>
