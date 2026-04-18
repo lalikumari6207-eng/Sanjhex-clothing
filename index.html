@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>SANJHEX</title>
+<title>SANJHEX ULTRA PRO MAX</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
 
@@ -13,54 +13,29 @@ font-family:Poppins;
 background:#0a0a0a;
 color:white;
 overflow-x:hidden;
+scroll-behavior:smooth;
 }
 
 /* HEADER */
 header{
 display:flex;
 justify-content:space-between;
+align-items:center;
 padding:15px;
-background:#111;
+background:rgba(0,0,0,0.6);
+backdrop-filter:blur(10px);
 position:sticky;
 top:0;
 z-index:100;
 }
 
-/* SEARCH */
-.search{
-text-align:center;
-padding:10px;
-}
-.search input{
-padding:10px;
-width:80%;
-border-radius:10px;
-border:none;
-}
-
-/* SALE */
-.sale{
-background:linear-gradient(90deg,#ff0000,#ff9900,#ff00ff);
-padding:8px;
-overflow:hidden;
-white-space:nowrap;
-}
-.sale span{
-display:inline-block;
-animation:move 10s linear infinite;
-}
-@keyframes move{
-0%{transform:translateX(100%)}
-100%{transform:translateX(-100%)}
-}
-
-/* BANNER */
-.banner{
-height:180px;
+/* HERO */
+.hero{
+height:220px;
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:26px;
+font-size:24px;
 font-weight:800;
 background:linear-gradient(270deg,#ff0000,#ff9900,#ff00ff);
 background-size:600% 600%;
@@ -72,53 +47,71 @@ animation:grad 6s infinite;
 100%{background-position:0% 50%}
 }
 
+/* SALE */
+.sale{
+background:red;
+white-space:nowrap;
+overflow:hidden;
+padding:8px;
+}
+.sale span{
+display:inline-block;
+animation:move 10s linear infinite;
+}
+@keyframes move{
+0%{transform:translateX(100%)}
+100%{transform:translateX(-100%)}
+}
+
+/* MENU */
+.menu{
+display:flex;
+justify-content:center;
+gap:10px;
+padding:10px;
+}
+.menu button{
+background:#1a1a1a;
+border:none;
+padding:10px 15px;
+border-radius:20px;
+color:white;
+cursor:pointer;
+}
+
 /* PRODUCTS */
 .products{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
 gap:15px;
-padding:20px;
+padding:15px;
 }
 
 .card{
-background:#1a1a1a;
+background:#151515;
 border-radius:12px;
 overflow:hidden;
 transition:0.3s;
+cursor:pointer;
 }
-.card:hover{transform:scale(1.03)}
-
+.card:hover{transform:scale(1.04)}
 .card img{
 width:100%;
 height:170px;
 object-fit:cover;
 }
+.card div{padding:10px}
 
-.card div{
-padding:10px;
-}
-
-/* BUTTON */
-button{
-background:#ff3c3c;
-border:none;
-color:white;
-padding:8px;
-border-radius:8px;
-cursor:pointer;
-margin:3px;
-}
-
-/* CART DRAWER */
+/* CART */
 .cart{
 position:fixed;
-right:-400px;
+right:-350px;
 top:0;
-width:320px;
+width:300px;
 height:100%;
 background:#111;
-transition:0.3s;
 padding:15px;
+transition:0.3s;
 overflow:auto;
 z-index:200;
 }
@@ -142,7 +135,7 @@ width:90%;
 max-width:420px;
 }
 
-/* ADMIN BTN */
+/* ADMIN */
 .adminBtn{
 position:fixed;
 bottom:20px;
@@ -152,33 +145,55 @@ padding:15px;
 border-radius:50%;
 cursor:pointer;
 }
+
+/* FOOTER */
+footer{
+background:#111;
+padding:20px;
+text-align:center;
+font-size:12px;
+color:#aaa;
+}
 </style>
 </head>
 
 <body>
 
 <header>
-<h2>SANJHEX 🔥</h2>
+<h3>SANJHEX ULTRA</h3>
 <div onclick="toggleCart()">🛒 <span id="count">0</span></div>
 </header>
 
+<div class="hero">🔥 SANJHEX ULTRA LUXURY STREETWEAR 🔥</div>
+
 <div class="sale">
-<span>🔥 LIMITED DROP - UPTO 50% OFF - SANJHEX LIVE NOW 🔥</span>
+<span>🔥 LIMITED DROP - UPTO 50% OFF - SANJHEX LIVE NOW - SELLING FAST 🔥</span>
 </div>
 
-<div class="banner">SANJHEX LUXURY STREETWEAR</div>
-
-<div class="search">
-<input id="search" placeholder="Search products..." onkeyup="search()">
+<div class="menu">
+<button onclick="filter('all')">All</button>
+<button onclick="filter('men')">Men</button>
+<button onclick="filter('women')">Women</button>
+<button onclick="filter('combo')">Combo</button>
 </div>
 
 <div class="products" id="products"></div>
 
-<!-- CART DRAWER -->
+<!-- CART -->
 <div class="cart" id="cart">
-<h3>Cart</h3>
+<h3>Your Cart</h3>
 <div id="cartItems"></div>
-<button onclick="checkout()">Checkout</button>
+<button onclick="checkout()">Checkout COD</button>
+</div>
+
+<!-- PRODUCT DETAIL -->
+<div class="modal" id="detailModal">
+<div class="box">
+<img id="dimg" style="width:100%;border-radius:10px">
+<h3 id="dname"></h3>
+<p id="dprice"></p>
+<button onclick="addFromDetail()">Add to Cart</button>
+</div>
 </div>
 
 <!-- CHECKOUT -->
@@ -192,17 +207,6 @@ cursor:pointer;
 </div>
 </div>
 
-<!-- PRODUCT DETAIL -->
-<div class="modal" id="detailModal">
-<div class="box">
-<img id="dimg" style="width:100%;border-radius:10px">
-<h3 id="dname"></h3>
-<p id="dprice"></p>
-<p id="ddesc">Premium streetwear quality product.</p>
-<button onclick="addFromDetail()">Add to Cart</button>
-</div>
-</div>
-
 <!-- ADMIN -->
 <div class="modal" id="adminModal">
 <div class="box">
@@ -210,8 +214,12 @@ cursor:pointer;
 <input id="pname" placeholder="Name">
 <input id="pprice" placeholder="Price">
 <input id="pimg" placeholder="Image URL">
+<select id="pcat">
+<option value="men">Men</option>
+<option value="women">Women</option>
+<option value="combo">Combo</option>
+</select>
 <button onclick="addProduct()">Add Product</button>
-
 <hr>
 <div id="orders"></div>
 </div>
@@ -219,21 +227,23 @@ cursor:pointer;
 
 <div class="adminBtn" onclick="admin()">⚙️</div>
 
+<footer>© SANJHEX ULTRA | Lyzonix Technologies</footer>
+
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const app = initializeApp({
-apiKey:"AIzaSyA9ERbGEbNoEr-3_CxdC-yzXlKx6UO_iqw",
-authDomain:"sanjhex-55029.firebaseapp.com",
-projectId:"sanjhex-55029"
+apiKey:"YOUR_KEY",
+authDomain:"YOUR_DOMAIN",
+projectId:"YOUR_ID"
 });
 
 const db=getFirestore(app);
 
 let products=[],cart=[];
-let currentProduct=null;
+let current=null;
 
 /* LOAD */
 async function load(){
@@ -249,28 +259,27 @@ let box=document.getElementById("products");
 box.innerHTML="";
 products.forEach(p=>{
 box.innerHTML+=`
-<div class="card">
-<img src="${p.img}" onclick='openDetail("${p.id}")'>
+<div class="card" onclick="openDetail('${p.id}')">
+<img src="${p.img}">
 <div>
 <h4>${p.name}</h4>
 <p>₹${p.price}</p>
-<button onclick="add('${p.id}')">Add</button>
+<button onclick="event.stopPropagation();add('${p.id}')">Add</button>
 </div>
 </div>`;
 });
 document.getElementById("count").innerText=cart.length;
 }
 
-/* SEARCH */
-window.search=()=>{
-let v=document.getElementById("search").value.toLowerCase();
-let f=products.filter(p=>p.name.toLowerCase().includes(v));
+/* FILTER */
+window.filter=(cat)=>{
+let f=cat==="all"?products:products.filter(p=>p.cat===cat);
 document.getElementById("products").innerHTML="";
 f.forEach(p=>{
 document.getElementById("products").innerHTML+=`
 <div class="card">
 <img src="${p.img}">
-<div><h4>${p.name}</h4><p>₹${p.price}</p></div>
+<div><h4>${p.name}</h4></div>
 </div>`;
 });
 };
@@ -283,35 +292,28 @@ render();
 
 window.toggleCart=()=>{
 document.getElementById("cart").classList.toggle("active");
-updateCart();
+document.getElementById("cartItems").innerHTML =
+cart.length ? cart.map(c=>`<p>${c.name}</p>`).join("") : "Cart Empty";
 };
-
-function updateCart(){
-let box=document.getElementById("cartItems");
-if(cart.length==0){box.innerHTML="Cart Empty";}
-else{
-box.innerHTML=cart.map(c=>`<p>${c.name} - ₹${c.price}</p>`).join("");
-}
-}
 
 /* DETAIL */
 window.openDetail=(id)=>{
-currentProduct=products.find(p=>p.id==id);
-dimg.src=currentProduct.img;
-dname.innerText=currentProduct.name;
-dprice.innerText="₹"+currentProduct.price;
-document.getElementById("detailModal").style.display="flex";
+current=products.find(p=>p.id==id);
+dimg.src=current.img;
+dname.innerText=current.name;
+dprice.innerText="₹"+current.price;
+detailModal.style.display="flex";
 };
 
 window.addFromDetail=()=>{
-cart.push(currentProduct);
+cart.push(current);
 render();
-document.getElementById("detailModal").style.display="none";
+detailModal.style.display="none";
 };
 
 /* CHECKOUT */
 window.checkout=()=>{
-document.getElementById("checkoutModal").style.display="flex";
+checkoutModal.style.display="flex";
 };
 
 window.placeOrder=async()=>{
@@ -324,14 +326,14 @@ status:"Pending"
 });
 alert("Order Placed");
 cart=[];
-render();
+load();
 };
 
 /* ADMIN */
 window.admin=()=>{
 let p=prompt("Admin Password");
 if(p==="admin123"){
-document.getElementById("adminModal").style.display="flex";
+adminModal.style.display="flex";
 loadOrders();
 }
 };
@@ -341,20 +343,18 @@ window.addProduct=async()=>{
 await addDoc(collection(db,"products"),{
 name:pname.value,
 price:pprice.value,
+cat:pcat.value,
 img:pimg.value
 });
-alert("Added");
 load();
 };
 
 /* ORDERS */
 async function loadOrders(){
 let snap=await getDocs(collection(db,"orders"));
-let box=document.getElementById("orders");
-box.innerHTML="";
+orders.innerHTML="";
 snap.forEach(d=>{
-let o=d.data();
-box.innerHTML+=`<p>${o.name} - ${o.status}</p>`;
+orders.innerHTML+=`<p>${d.data().name} - ${d.data().status}</p>`;
 });
 }
 
