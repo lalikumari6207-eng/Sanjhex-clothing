@@ -2,13 +2,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>SANJHEX ULTRA LUXE</title>
+<title>SANJHEX ULTRA PRO MAX</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700;900&display=swap" rel="stylesheet">
 
 <style>
 html{scroll-behavior:smooth;}
-
 body{
 margin:0;
 font-family:Poppins;
@@ -20,92 +19,71 @@ color:white;
 nav{
 position:sticky;
 top:0;
-z-index:100;
 display:flex;
 justify-content:space-between;
 padding:15px 20px;
-background:rgba(0,0,0,0.6);
-backdrop-filter:blur(12px);
+background:rgba(0,0,0,0.7);
+backdrop-filter:blur(10px);
+z-index:100;
+}
+
+/* HERO */
+.hero{
+height:80vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+background:linear-gradient(120deg,#ff0000,#ff9900,#ff00ff);
+background-size:400% 400%;
+animation:grad 6s infinite;
+}
+
+@keyframes grad{
+0%{background-position:0% 50%}
+50%{background-position:100% 50%}
+100%{background-position:0% 50%}
 }
 
 /* SALE */
 .sale{
-background:linear-gradient(90deg,#ff0000,#ff9900,#ff00ff);
+background:red;
 white-space:nowrap;
 overflow:hidden;
 padding:8px;
-font-weight:600;
 }
 .sale span{
 display:inline-block;
-animation:move 12s linear infinite;
+animation:move 10s linear infinite;
 }
 @keyframes move{
 0%{transform:translateX(100%)}
 100%{transform:translateX(-100%)}
 }
 
-/* HERO */
-.hero{
-height:85vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-text-align:center;
-background:url('https://images.unsplash.com/photo-1520975693416-35a0c2b3b5c7') center/cover;
-position:relative;
-}
-
-.hero::after{
-content:"";
-position:absolute;
-inset:0;
-background:rgba(0,0,0,0.55);
-}
-
-.hero h1{
-z-index:1;
-font-size:38px;
-font-weight:900;
-}
-
-.hero p{z-index:1;opacity:0.8}
-
 /* CATEGORY */
-.section{
-padding:40px 20px;
-text-align:center;
-font-size:24px;
-font-weight:800;
-}
-
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
 gap:15px;
 padding:20px;
 }
 
 .cat{
-height:280px;
 position:relative;
+height:280px;
 border-radius:15px;
 overflow:hidden;
 cursor:pointer;
 }
-
 .cat img{
 width:100%;
 height:100%;
 object-fit:cover;
-transition:0.5s;
+transition:0.4s;
 }
-
-.cat:hover img{
-transform:scale(1.05);
-}
-
+.cat:hover img{transform:scale(1.05)}
 .cat h2{
 position:absolute;
 bottom:15px;
@@ -126,22 +104,14 @@ border-radius:12px;
 overflow:hidden;
 transition:0.3s;
 }
-
-.card:hover{
-transform:translateY(-5px);
-}
-
+.card:hover{transform:translateY(-5px)}
 .card img{
 width:100%;
 height:180px;
 object-fit:cover;
 }
+.card div{padding:10px}
 
-.card div{
-padding:10px;
-}
-
-/* BUTTON */
 button{
 background:#ff3c3c;
 border:none;
@@ -149,6 +119,7 @@ color:white;
 padding:8px;
 border-radius:8px;
 cursor:pointer;
+margin-top:5px;
 }
 
 /* CART */
@@ -160,14 +131,11 @@ width:320px;
 height:100%;
 background:#111;
 padding:15px;
-transition:0.35s;
-z-index:200;
+transition:0.3s;
 overflow:auto;
+z-index:200;
 }
-
-.cart.active{
-right:0;
-}
+.cart.active{right:0}
 
 /* MODAL */
 .modal{
@@ -187,13 +155,6 @@ width:90%;
 max-width:400px;
 }
 
-/* ABOUT */
-.about{
-padding:50px 20px;
-background:#111;
-text-align:center;
-}
-
 /* ADMIN */
 .adminBtn{
 position:fixed;
@@ -203,6 +164,13 @@ background:red;
 padding:15px;
 border-radius:50%;
 cursor:pointer;
+}
+input,select{
+width:100%;
+padding:10px;
+margin:5px 0;
+border-radius:8px;
+border:none;
 }
 </style>
 </head>
@@ -215,16 +183,15 @@ cursor:pointer;
 </nav>
 
 <div class="sale">
-<span>🔥 LIMITED DROP - UPTO 50% OFF - SANJHEX LIVE NOW - HURRY UP 🔥</span>
+<span>🔥 SANJHEX LIVE DROP - UPTO 50% OFF - LIMITED STOCK 🔥</span>
 </div>
 
 <div class="hero">
-<h1>SANJHEX ULTRA LUXE</h1>
-<p>Premium Streetwear • Limited Edition • Luxury Drop</p>
+<h1>SANJHEX ULTRA PRO MAX</h1>
+<p>Luxury Streetwear • Premium Drops • Modern Fashion</p>
 </div>
 
-<div class="section">SHOP BY CATEGORY</div>
-
+<!-- CATEGORY -->
 <div class="grid">
 <div class="cat" onclick="filter('men')">
 <img src="https://images.unsplash.com/photo-1520975693416-35a0c2b3b5c7">
@@ -242,17 +209,8 @@ cursor:pointer;
 </div>
 </div>
 
-<div class="section">PRODUCTS</div>
-
+<h2 style="text-align:center">PRODUCTS</h2>
 <div class="products" id="products"></div>
-
-<div class="about">
-<h2>About SANJHEX</h2>
-<p>
-SANJHEX is a luxury streetwear brand inspired by global fashion houses.
-We deliver limited drops, premium quality clothing and aesthetic street fashion.
-</p>
-</div>
 
 <!-- CART -->
 <div class="cart" id="cart">
@@ -261,16 +219,48 @@ We deliver limited drops, premium quality clothing and aesthetic street fashion.
 </div>
 
 <!-- ADMIN -->
+<div class="modal" id="adminModal">
+<div class="box">
+<h3>Admin Panel</h3>
+
+<input id="pname" placeholder="Product Name">
+<input id="pprice" placeholder="Price">
+<input id="pimg" placeholder="Image URL">
+<select id="pcat">
+<option value="men">Men</option>
+<option value="women">Women</option>
+<option value="combo">Combo</option>
+</select>
+
+<button onclick="addProduct()">Add Product</button>
+</div>
+</div>
+
 <div class="adminBtn" onclick="admin()">⚙️</div>
 
-<script>
-let products=[
-{name:"Oversized Tee",price:999,img:"https://images.unsplash.com/photo-1520975693416-35a0c2b3b5c7",cat:"men"},
-{name:"Women Dress",price:1299,img:"https://images.unsplash.com/photo-1520975958228-3b6c1b4b2c6a",cat:"women"},
-{name:"Couple Set",price:1999,img:"https://images.unsplash.com/photo-1520975922284-9f1b0a2f2a3b",cat:"combo"}
-];
+<script type="module">
 
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const app = initializeApp({
+apiKey:"YOUR_KEY",
+authDomain:"YOUR_DOMAIN",
+projectId:"YOUR_ID"
+});
+
+const db = getFirestore(app);
+
+let products=[];
 let cart=[];
+
+/* LOAD */
+async function load(){
+let snap = await getDocs(collection(db,"products"));
+products=[];
+snap.forEach(d=>products.push({...d.data(),id:d.id}));
+render();
+}
 
 /* RENDER */
 function render(list=products){
@@ -283,7 +273,7 @@ box.innerHTML+=`
 <div>
 <h4>${p.name}</h4>
 <p>₹${p.price}</p>
-<button onclick="add('${p.name}')">Add</button>
+<button onclick="add('${p.id}')">Add</button>
 </div>
 </div>`;
 });
@@ -291,33 +281,45 @@ document.getElementById("count").innerText=cart.length;
 }
 
 /* FILTER */
-function filter(cat){
+window.filter=(cat)=>{
 render(products.filter(p=>p.cat===cat));
-}
+};
 
 /* CART */
-function add(name){
-cart.push(name);
-document.getElementById("count").innerText=cart.length;
-}
+window.add=(id)=>{
+cart.push(products.find(p=>p.id==id));
+render();
+};
 
-/* TOGGLE CART */
-function toggleCart(){
-let c=document.getElementById("cart");
-c.classList.toggle("active");
+window.toggleCart=()=>{
+document.getElementById("cart").classList.toggle("active");
 document.getElementById("cartItems").innerHTML =
-cart.length ? cart.map(c=>`<p>${c}</p>`).join("") : "Cart Empty";
-}
+cart.length ? cart.map(c=>`<p>${c.name} - ₹${c.price}</p>`).join("") : "Cart Empty";
+};
 
 /* ADMIN */
-function admin(){
-let p=prompt("Admin Password");
-if(p==="admin123"){
-alert("Admin Panel Active (Next upgrade backend add karenge)");
+window.admin=()=>{
+let pass=prompt("Admin Password");
+if(pass==="admin123"){
+document.getElementById("adminModal").style.display="flex";
 }
-}
+};
 
-render();
+/* ADD PRODUCT (NO STORAGE) */
+window.addProduct=async()=>{
+await addDoc(collection(db,"products"),{
+name:pname.value,
+price:pprice.value,
+img:pimg.value,
+cat:pcat.value
+});
+
+alert("Product Added");
+load();
+};
+
+load();
+
 </script>
 
 </body>
