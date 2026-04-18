@@ -8,10 +8,11 @@
 
 <style>
 html{scroll-behavior:smooth;}
+
 body{
 margin:0;
 font-family:Poppins;
-background:#0a0a0a;
+background:#0b0b0b;
 color:white;
 }
 
@@ -19,57 +20,75 @@ color:white;
 nav{
 position:sticky;
 top:0;
+z-index:100;
 display:flex;
 justify-content:space-between;
 padding:15px 20px;
 background:rgba(0,0,0,0.6);
-backdrop-filter:blur(10px);
-z-index:100;
+backdrop-filter:blur(12px);
 }
 
-/* HERO SLIDER */
-.slider{
-height:85vh;
-position:relative;
+/* SALE */
+.sale{
+background:linear-gradient(90deg,#ff0000,#ff9900,#ff00ff);
+white-space:nowrap;
 overflow:hidden;
+padding:8px;
+font-weight:600;
+}
+.sale span{
+display:inline-block;
+animation:move 12s linear infinite;
+}
+@keyframes move{
+0%{transform:translateX(100%)}
+100%{transform:translateX(-100%)}
 }
 
-.slide{
+/* HERO */
+.hero{
+height:85vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+background:url('https://images.unsplash.com/photo-1520975693416-35a0c2b3b5c7') center/cover;
+position:relative;
+}
+
+.hero::after{
+content:"";
 position:absolute;
-width:100%;
-height:100%;
-opacity:0;
-transition:1s;
-background-size:cover;
-background-position:center;
+inset:0;
+background:rgba(0,0,0,0.55);
 }
 
-.slide.active{opacity:1;}
-
-.overlay{
-position:absolute;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.5);
+.hero h1{
+z-index:1;
+font-size:38px;
+font-weight:900;
 }
+
+.hero p{z-index:1;opacity:0.8}
 
 /* CATEGORY */
-.section-title{
+.section{
+padding:40px 20px;
 text-align:center;
-padding:40px 20px 10px;
-font-size:26px;
+font-size:24px;
 font-weight:800;
 }
 
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
 gap:15px;
 padding:20px;
 }
 
 .cat{
-height:300px;
+height:280px;
 position:relative;
 border-radius:15px;
 overflow:hidden;
@@ -83,12 +102,14 @@ object-fit:cover;
 transition:0.5s;
 }
 
-.cat:hover img{transform:scale(1.1);}
+.cat:hover img{
+transform:scale(1.05);
+}
 
 .cat h2{
 position:absolute;
-bottom:20px;
-left:20px;
+bottom:15px;
+left:15px;
 }
 
 /* PRODUCTS */
@@ -100,9 +121,14 @@ padding:20px;
 }
 
 .card{
-background:#141414;
+background:#151515;
 border-radius:12px;
 overflow:hidden;
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-5px);
 }
 
 .card img{
@@ -111,8 +137,11 @@ height:180px;
 object-fit:cover;
 }
 
-.card div{padding:10px;}
+.card div{
+padding:10px;
+}
 
+/* BUTTON */
 button{
 background:#ff3c3c;
 border:none;
@@ -120,7 +149,6 @@ color:white;
 padding:8px;
 border-radius:8px;
 cursor:pointer;
-margin-top:5px;
 }
 
 /* CART */
@@ -132,17 +160,38 @@ width:320px;
 height:100%;
 background:#111;
 padding:15px;
-transition:0.3s;
-overflow:auto;
+transition:0.35s;
 z-index:200;
+overflow:auto;
 }
-.cart.active{right:0;}
+
+.cart.active{
+right:0;
+}
+
+/* MODAL */
+.modal{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.7);
+display:none;
+justify-content:center;
+align-items:center;
+}
+
+.box{
+background:#111;
+padding:20px;
+border-radius:12px;
+width:90%;
+max-width:400px;
+}
 
 /* ABOUT */
 .about{
-padding:60px 20px;
-text-align:center;
+padding:50px 20px;
 background:#111;
+text-align:center;
 }
 
 /* ADMIN */
@@ -160,23 +209,22 @@ cursor:pointer;
 
 <body>
 
-<!-- NAV -->
 <nav>
 <h3>SANJHEX</h3>
 <div onclick="toggleCart()">🛒 <span id="count">0</span></div>
 </nav>
 
-<!-- HERO SLIDER -->
-<div class="slider">
-<div class="slide active" style="background-image:url('https://images.unsplash.com/photo-1520975693416-35a0c2b3b5c7')"></div>
-<div class="slide" style="background-image:url('https://images.unsplash.com/photo-1520975958228-3b6c1b4b2c6a')"></div>
-<div class="slide" style="background-image:url('https://images.unsplash.com/photo-1520975922284-9f1b0a2f2a3b')"></div>
-<div class="overlay"></div>
+<div class="sale">
+<span>🔥 LIMITED DROP - UPTO 50% OFF - SANJHEX LIVE NOW - HURRY UP 🔥</span>
 </div>
 
-<h2 class="section-title">SHOP BY CATEGORY</h2>
+<div class="hero">
+<h1>SANJHEX ULTRA LUXE</h1>
+<p>Premium Streetwear • Limited Edition • Luxury Drop</p>
+</div>
 
-<!-- CATEGORIES -->
+<div class="section">SHOP BY CATEGORY</div>
+
 <div class="grid">
 <div class="cat" onclick="filter('men')">
 <img src="https://images.unsplash.com/photo-1520975693416-35a0c2b3b5c7">
@@ -194,16 +242,15 @@ cursor:pointer;
 </div>
 </div>
 
-<h2 class="section-title">PRODUCTS</h2>
+<div class="section">PRODUCTS</div>
 
 <div class="products" id="products"></div>
 
-<!-- ABOUT -->
 <div class="about">
 <h2>About SANJHEX</h2>
 <p>
-Luxury streetwear brand inspired by global fashion culture.
-Limited drops, premium quality, bold identity.
+SANJHEX is a luxury streetwear brand inspired by global fashion houses.
+We deliver limited drops, premium quality clothing and aesthetic street fashion.
 </p>
 </div>
 
@@ -213,6 +260,7 @@ Limited drops, premium quality, bold identity.
 <div id="cartItems"></div>
 </div>
 
+<!-- ADMIN -->
 <div class="adminBtn" onclick="admin()">⚙️</div>
 
 <script>
@@ -223,15 +271,6 @@ let products=[
 ];
 
 let cart=[];
-
-/* SLIDER AUTO */
-let i=0;
-setInterval(()=>{
-let slides=document.querySelectorAll(".slide");
-slides.forEach(s=>s.classList.remove("active"));
-i=(i+1)%slides.length;
-slides[i].classList.add("active");
-},3000);
 
 /* RENDER */
 function render(list=products){
@@ -244,32 +283,37 @@ box.innerHTML+=`
 <div>
 <h4>${p.name}</h4>
 <p>₹${p.price}</p>
-<button onclick="add('${p.name}')">Add to Cart</button>
+<button onclick="add('${p.name}')">Add</button>
 </div>
 </div>`;
 });
 document.getElementById("count").innerText=cart.length;
 }
 
+/* FILTER */
 function filter(cat){
 render(products.filter(p=>p.cat===cat));
 }
 
+/* CART */
 function add(name){
 cart.push(name);
 document.getElementById("count").innerText=cart.length;
 }
 
+/* TOGGLE CART */
 function toggleCart(){
-document.getElementById("cart").classList.toggle("active");
+let c=document.getElementById("cart");
+c.classList.toggle("active");
 document.getElementById("cartItems").innerHTML =
-cart.length?cart.map(c=>`<p>${c}</p>`).join(""):"Cart Empty";
+cart.length ? cart.map(c=>`<p>${c}</p>`).join("") : "Cart Empty";
 }
 
+/* ADMIN */
 function admin(){
 let p=prompt("Admin Password");
 if(p==="admin123"){
-alert("Admin Mode (demo)");
+alert("Admin Panel Active (Next upgrade backend add karenge)");
 }
 }
 
