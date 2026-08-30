@@ -1,0 +1,762 @@
+
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SANJHEX | Franchise & Business</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy-950:#060d1a;
+  --navy-900:#0a1628;
+  --navy-800:#0f2038;
+  --navy-700:#16305a;
+  --navy-600:#1f3f70;
+  --steel:#8fa3c4;
+  --ink:#eaf0fb;
+  --white:#ffffff;
+  --gold:#c9a961;
+  --gold-bright:#e2c583;
+  --danger:#e5484d;
+  --success:#3fb97a;
+  --clip: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 18px 100%, 0 calc(100% - 18px));
+  --clip-sm: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--navy-950);
+  color:var(--ink);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,.display{font-family:'Space Grotesk',sans-serif;}
+a{text-decoration:none;color:inherit;}
+img{max-width:100%;display:block;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+::selection{background:var(--gold);color:var(--navy-950);}
+
+.hex-bg{
+  position:fixed;inset:0;
+  background-image:
+    linear-gradient(135deg, transparent 48%, rgba(201,169,97,0.035) 49%, rgba(201,169,97,0.035) 51%, transparent 52%),
+    radial-gradient(circle at 20% 15%, rgba(31,63,112,0.5), transparent 45%),
+    radial-gradient(circle at 85% 80%, rgba(201,169,97,0.06), transparent 40%);
+  background-size: 60px 60px, 100% 100%, 100% 100%;
+  pointer-events:none;
+  z-index:0;
+}
+  /* ---------- HEADER ---------- */
+header{
+  position:fixed;top:0;left:0;right:0;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 5vw;
+  z-index:1000;
+  backdrop-filter:blur(10px);
+  background:linear-gradient(to bottom, rgba(6,13,26,0.85), transparent);
+  transition:background .3s ease;
+}
+.brand{display:flex;align-items:center;gap:12px;}
+.brand img{height:42px;width:auto;}
+.brand span{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:3px;font-size:1.1rem;color:var(--white);}
+
+.burger{
+  width:52px;height:52px;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;z-index:1200;
+  clip-path:var(--clip-sm);
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(201,169,97,0.25);
+  transition:background .3s ease;
+}
+.burger:hover{background:rgba(201,169,97,0.1);}
+.burger .lines{width:22px;height:16px;position:relative;}
+.burger .lines span{
+  position:absolute;left:0;width:100%;height:2px;background:var(--gold-bright);
+  transition:all .35s cubic-bezier(.65,0,.35,1);
+}
+.burger .lines span:nth-child(1){top:0;}
+.burger .lines span:nth-child(2){top:7px;}
+.burger .lines span:nth-child(3){top:14px;}
+.burger.open .lines span:nth-child(1){top:7px;transform:rotate(45deg);}
+.burger.open .lines span:nth-child(2){opacity:0;}
+.burger.open .lines span:nth-child(3){top:7px;transform:rotate(-45deg);}
+
+/* ---------- FULLSCREEN MENU ---------- */
+.menu-overlay{
+  position:fixed;inset:0;z-index:1100;
+  background:var(--navy-900);
+  clip-path:circle(0px at calc(100% - 45px) 44px);
+  transition:clip-path .65s cubic-bezier(.77,0,.18,1);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  pointer-events:none;
+}
+.menu-overlay.open{
+  clip-path:circle(160% at calc(100% - 45px) 44px);
+  pointer-events:auto;
+}
+.menu-overlay::before{
+  content:'';position:absolute;inset:0;
+  background-image:linear-gradient(135deg, transparent 48%, rgba(201,169,97,0.05) 49%, rgba(201,169,97,0.05) 51%, transparent 52%);
+  background-size:70px 70px;
+  opacity:.6;
+}
+.menu-links{display:flex;flex-direction:column;gap:8px;position:relative;z-index:2;}
+.menu-links a{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(2rem,7vw,4rem);
+  font-weight:700;
+  color:var(--white);
+  padding:6px 10px;
+  position:relative;
+  opacity:0;
+  transform:translateY(30px);
+  transition:opacity .5s ease, transform .5s ease, color .3s ease;
+  letter-spacing:1px;
+}
+.menu-overlay.open .menu-links a{opacity:1;transform:translateY(0);}
+.menu-overlay.open .menu-links a:nth-child(1){transition-delay:.15s;}
+.menu-overlay.open .menu-links a:nth-child(2){transition-delay:.25s;}
+.menu-overlay.open .menu-links a:nth-child(3){transition-delay:.35s;}
+.menu-links a span{color:var(--gold);font-size:0.9rem;margin-right:14px;font-family:'Inter',sans-serif;font-weight:600;vertical-align:middle;}
+.menu-links a:hover{color:var(--gold-bright);}
+.menu-admin{
+  position:absolute;bottom:36px;left:0;right:0;text-align:center;
+  opacity:0;transition:opacity .5s ease .5s;
+  z-index:2;
+}
+.menu-overlay.open .menu-admin{opacity:1;}
+.menu-admin a{font-size:.8rem;letter-spacing:2px;color:var(--steel);text-transform:uppercase;border-bottom:1px solid transparent;}
+.menu-admin a:hover{color:var(--gold);border-color:var(--gold);}
+  /* ---------- SECTIONS ---------- */
+section{position:relative;z-index:1;padding:140px 6vw 100px;}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:.72rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold);
+  font-weight:600;margin-bottom:20px;
+}
+.eyebrow::before{content:'';width:26px;height:1px;background:var(--gold);}
+
+/* HERO */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+  padding-top:100px;
+}
+.hero-logo{
+  width:min(280px,55vw);
+  margin-bottom:28px;
+  filter:drop-shadow(0 0 40px rgba(201,169,97,0.15));
+  animation:floatLogo 6s ease-in-out infinite, fadeUp 1s ease both;
+}
+@keyframes floatLogo{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+.hero h1{
+  font-size:clamp(2.4rem,7vw,5.2rem);
+  font-weight:700;letter-spacing:8px;color:var(--white);
+  animation:fadeUp 1s ease .1s both;
+}
+.hero p.tag{
+  margin-top:18px;font-size:clamp(1rem,2vw,1.25rem);color:var(--steel);
+  max-width:560px;line-height:1.7;
+  animation:fadeUp 1s ease .25s both;
+}
+.hero-cta{display:flex;gap:18px;margin-top:44px;flex-wrap:wrap;justify-content:center;animation:fadeUp 1s ease .4s both;}
+.btn{
+  padding:16px 34px;font-weight:600;font-size:.95rem;letter-spacing:1px;
+  clip-path:var(--clip-sm);
+  transition:transform .3s ease, box-shadow .3s ease, background .3s ease;
+  display:inline-flex;align-items:center;gap:10px;
+}
+.btn-primary{background:var(--gold);color:var(--navy-950);}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(201,169,97,0.25);background:var(--gold-bright);}
+.btn-ghost{border:1px solid rgba(255,255,255,0.25);color:var(--white);}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-3px);}
+
+.scroll-hint{
+  position:absolute;bottom:34px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  font-size:.68rem;letter-spacing:3px;color:var(--steel);text-transform:uppercase;
+  animation:fadeUp 1s ease .6s both;
+}
+.scroll-hint .line{width:1px;height:36px;background:linear-gradient(var(--gold),transparent);animation:scrollLine 2s ease-in-out infinite;}
+@keyframes scrollLine{0%{transform:scaleY(0);transform-origin:top;}50%{transform:scaleY(1);transform-origin:top;}51%{transform-origin:bottom;}100%{transform:scaleY(0);transform-origin:bottom;}}
+  /* SECTION HEAD */
+.section-head{max-width:700px;margin-bottom:60px;}
+.section-head h2{font-size:clamp(2rem,4.5vw,3.2rem);color:var(--white);font-weight:700;line-height:1.15;}
+.section-head p{margin-top:16px;color:var(--steel);font-size:1.05rem;line-height:1.7;max-width:560px;}
+
+/* FOUNDERS */
+.founders-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:32px;}
+.founder-card{
+  background:linear-gradient(160deg,var(--navy-800),var(--navy-900));
+  border:1px solid rgba(201,169,97,0.15);
+  clip-path:var(--clip);
+  padding:36px 32px 32px;
+  position:relative;
+  overflow:hidden;
+  transition:transform .4s ease, border-color .4s ease;
+}
+.founder-card:hover{transform:translateY(-8px);border-color:rgba(201,169,97,0.45);}
+.founder-card::after{
+  content:'';position:absolute;top:-40%;right:-40%;width:200px;height:200px;
+  background:radial-gradient(circle,rgba(201,169,97,0.12),transparent 70%);
+}
+.founder-photo{
+  width:120px;height:120px;
+  clip-path:var(--clip-sm);
+  overflow:hidden;margin-bottom:22px;
+  border:2px solid rgba(201,169,97,0.3);
+}
+.founder-photo img{width:100%;height:100%;object-fit:cover;}
+.founder-card h3{font-size:1.5rem;color:var(--white);font-weight:700;}
+.founder-card .role{color:var(--gold);font-size:.8rem;letter-spacing:2px;text-transform:uppercase;margin:6px 0 16px;font-weight:600;}
+.founder-card .bio{color:var(--steel);font-size:.95rem;line-height:1.7;margin-bottom:24px;}
+.founder-socials{display:flex;gap:12px;flex-wrap:wrap;}
+.founder-socials a{
+  display:flex;align-items:center;gap:7px;
+  font-size:.78rem;padding:9px 14px;
+  border:1px solid rgba(255,255,255,0.15);
+  clip-path:var(--clip-sm);
+  color:var(--steel);
+  transition:all .3s ease;
+}
+.founder-socials a:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,169,97,0.06);}
+.founder-socials svg{width:14px;height:14px;fill:currentColor;}
+  /* FRANCHISE FORM */
+.franchise-wrap{display:grid;grid-template-columns:1fr 1.15fr;gap:56px;align-items:start;}
+@media(max-width:900px){.franchise-wrap{grid-template-columns:1fr;}}
+.franchise-info .info-item{
+  display:flex;gap:16px;padding:20px 0;border-bottom:1px solid rgba(255,255,255,0.08);
+}
+.franchise-info .info-item .ico{
+  width:42px;height:42px;flex:none;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(201,169,97,0.1);clip-path:var(--clip-sm);
+  color:var(--gold);
+}
+.franchise-info .info-item h4{color:var(--white);font-size:1rem;margin-bottom:4px;}
+.franchise-info .info-item p{color:var(--steel);font-size:.9rem;line-height:1.6;}
+
+.form-card{
+  background:linear-gradient(160deg,var(--navy-800),var(--navy-900));
+  border:1px solid rgba(201,169,97,0.15);
+  clip-path:var(--clip);
+  padding:40px;
+}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px;}
+@media(max-width:520px){.form-row{grid-template-columns:1fr;}}
+.field{margin-bottom:18px;}
+.field label{display:block;font-size:.78rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--steel);margin-bottom:8px;}
+.field input, .field select, .field textarea{
+  width:100%;padding:13px 14px;
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.15);
+  color:var(--ink);font-size:.95rem;font-family:'Inter',sans-serif;
+  clip-path:var(--clip-sm);
+  transition:border-color .3s ease, background .3s ease;
+}
+.field input:focus, .field select:focus, .field textarea:focus{
+  outline:none;border-color:var(--gold);background:rgba(201,169,97,0.05);
+}
+.field textarea{resize:vertical;min-height:100px;}
+.field select option{background:var(--navy-900);}
+.submit-btn{width:100%;justify-content:center;margin-top:8px;}
+.form-msg{margin-top:16px;font-size:.9rem;padding:12px 14px;clip-path:var(--clip-sm);display:none;}
+.form-msg.show{display:block;animation:fadeUp .4s ease both;}
+.form-msg.ok{background:rgba(63,185,122,0.12);color:var(--success);border:1px solid rgba(63,185,122,0.3);}
+.form-msg.err{background:rgba(229,72,77,0.12);color:var(--danger);border:1px solid rgba(229,72,77,0.3);}
+  /* FOOTER */
+footer{
+  position:relative;z-index:1;
+  padding:50px 6vw 30px;
+  border-top:1px solid rgba(255,255,255,0.08);
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;
+}
+footer .brand span{font-size:.95rem;}
+footer .foot-links{display:flex;gap:24px;font-size:.82rem;color:var(--steel);}
+footer .foot-links a:hover{color:var(--gold);}
+
+/* ---------- ADMIN ---------- */
+.admin-overlay{
+  position:fixed;inset:0;background:var(--navy-950);z-index:2000;
+  display:none;overflow-y:auto;
+}
+.admin-overlay.show{display:block;}
+.admin-topbar{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:20px 5vw;border-bottom:1px solid rgba(255,255,255,0.08);
+  position:sticky;top:0;background:rgba(6,13,26,0.95);backdrop-filter:blur(8px);z-index:5;
+}
+.admin-topbar .brand span{font-size:.95rem;}
+.admin-close{
+  width:42px;height:42px;display:flex;align-items:center;justify-content:center;
+  border:1px solid rgba(255,255,255,0.15);clip-path:var(--clip-sm);color:var(--steel);
+  transition:all .3s ease;font-size:1.1rem;
+}
+.admin-close:hover{border-color:var(--gold);color:var(--gold);}
+
+.admin-login{
+  min-height:80vh;display:flex;align-items:center;justify-content:center;padding:40px 6vw;
+}
+.login-card{
+  width:100%;max-width:400px;
+  background:linear-gradient(160deg,var(--navy-800),var(--navy-900));
+  border:1px solid rgba(201,169,97,0.2);clip-path:var(--clip);
+  padding:44px 36px;
+}
+.login-card h2{color:var(--white);font-size:1.6rem;margin-bottom:6px;}
+.login-card p{color:var(--steel);font-size:.88rem;margin-bottom:28px;}
+.login-err{color:var(--danger);font-size:.85rem;margin-top:6px;display:none;}
+.login-err.show{display:block;}
+
+.admin-dash{padding:36px 5vw 80px;display:none;}
+.admin-dash.show{display:block;}
+.admin-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px;margin-bottom:36px;}
+.stat-box{
+  background:var(--navy-800);border:1px solid rgba(201,169,97,0.15);clip-path:var(--clip-sm);
+  padding:22px;
+}
+.stat-box .num{font-family:'Space Grotesk',sans-serif;font-size:2.2rem;font-weight:700;color:var(--gold);}
+.stat-box .lbl{font-size:.78rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--steel);margin-top:6px;}
+
+.admin-toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px;}
+.admin-toolbar h3{color:var(--white);font-size:1.3rem;}
+.mini-btn{
+  padding:10px 18px;font-size:.82rem;border:1px solid rgba(255,255,255,0.15);clip-path:var(--clip-sm);color:var(--steel);
+  transition:all .3s ease;
+}
+.mini-btn:hover{border-color:var(--gold);color:var(--gold);}
+
+.submissions-list{display:flex;flex-direction:column;gap:14px;}
+.sub-card{
+  background:var(--navy-800);border:1px solid rgba(255,255,255,0.08);clip-path:var(--clip-sm);
+  padding:20px 22px;display:grid;grid-template-columns:1fr auto;gap:14px;align-items:start;
+  transition:border-color .3s ease;
+}
+.sub-card:hover{border-color:rgba(201,169,97,0.35);}
+.sub-main{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;}
+.sub-main .item .k{font-size:.68rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:4px;}
+.sub-main .item .v{font-size:.92rem;color:var(--ink);word-break:break-word;}
+.sub-main .item.msg{grid-column:1/-1;}
+.sub-time{font-size:.72rem;color:var(--steel);white-space:nowrap;}
+.sub-del{
+  color:var(--danger);font-size:.75rem;border:1px solid rgba(229,72,77,0.3);padding:7px 12px;clip-path:var(--clip-sm);
+  transition:all .3s ease;
+}
+.sub-del:hover{background:rgba(229,72,77,0.12);}
+.empty-state{
+  text-align:center;padding:70px 20px;color:var(--steel);
+}
+.empty-state .ico{font-size:2.4rem;margin-bottom:14px;}
+
+@media(max-width:640px){
+  section{padding:110px 6vw 70px;}
+  .form-card{padding:26px;}
+  .sub-card{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="hex-bg"></div>
+
+<!-- ================= HEADER ================= -->
+<header>
+  <a href="#home" class="brand">
+    <img src="logo.png" alt="Sanjhex logo">
+    <span>SANJHEX</span>
+  </a>
+  <button class="burger" id="burgerBtn" aria-label="Open menu">
+    <div class="lines"><span></span><span></span><span></span></div>
+  </button>
+</header>
+
+<!-- ================= FULLSCREEN MENU ================= -->
+<div class="menu-overlay" id="menuOverlay">
+  <nav class="menu-links">
+    <a href="#home" data-close><span>01</span>Home</a>
+    <a href="#founders" data-close><span>02</span>Founders</a>
+    <a href="#franchise" data-close><span>03</span>Franchise &amp; Collab</a>
+    <a href="#contact" data-close><span>04</span>Contact</a>
+  </nav>
+  <div class="menu-admin">
+    <a href="#" id="openAdmin">Admin Panel</a>
+  </div>
+</div>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="home">
+  <img src="logo.png" alt="Sanjhex" class="hero-logo">
+  <h1>SANJHEX</h1>
+  <p class="tag">A streetwear label made for everyone. Unisex fits, engineered details, no boundaries — wear what moves you.</p>
+  <div class="hero-cta">
+    <a href="#franchise" class="btn btn-primary">Franchise / Collab Enquiry</a>
+    <a href="#founders" class="btn btn-ghost">Meet The Team</a>
+  </div>
+  <div class="scroll-hint"><span>Scroll</span><span class="line"></span></div>
+</section>
+
+<!-- ================= FOUNDERS ================= -->
+<section id="founders">
+  <div class="section-head">
+    <div class="eyebrow">Leadership</div>
+    <h2>The People Behind Sanjhex</h2>
+    <p>Sanjhex is built and run by a small team focused on one thing — unisex streetwear that fits real life. Here's who's behind the brand.</p>
+  </div>
+  <div class="founders-grid">
+
+    <div class="founder-card">
+      <div class="founder-photo"><img src="logo.png" alt="Founder photo placeholder"></div>
+      <h3>[Founder Name]</h3>
+      <div class="role">Founder</div>
+      <p class="bio">Started Sanjhex with a simple idea — clothing that doesn't separate people by gender, only by style. Leads the brand's vision and direction.</p>
+      <div class="founder-socials">
+        <a href="mailto:founder@sanjhex.com">Email</a>
+        <a href="tel:+910000000000">Call</a>
+        <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    </div>
+
+    <div class="founder-card">
+      <div class="founder-photo"><img src="logo.png" alt="CEO photo placeholder"></div>
+      <h3>[CEO Name]</h3>
+      <div class="role">Chief Executive Officer</div>
+      <p class="bio">Oversees business strategy, growth, and everyday operations — making sure Sanjhex scales without losing what makes it Sanjhex.</p>
+      <div class="founder-socials">
+        <a href="mailto:ceo@sanjhex.com">Email</a>
+        <a href="tel:+910000000000">Call</a>
+        <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    </div>
+
+    <div class="founder-card">
+      <div class="founder-photo"><img src="logo.png" alt="MD photo placeholder"></div>
+      <h3>[MD Name]</h3>
+      <div class="role">Managing Director</div>
+      <p class="bio">Manages production, supply chain, and franchise operations — the person who turns plans into shipped product.</p>
+      <div class="founder-socials">
+        <a href="mailto:md@sanjhex.com">Email</a>
+        <a href="tel:+910000000000">Call</a>
+        <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    </div>
+
+    <div class="founder-card">
+      <div class="founder-photo"><img src="logo.png" alt="Co-Founder photo placeholder"></div>
+      <h3>[Co-Founder Name]</h3>
+      <div class="role">Co-Founder</div>
+      <p class="bio">Co-built Sanjhex from day one, focused on design language, product quality, and partnerships that fit the brand.</p>
+      <div class="founder-socials">
+        <a href="mailto:cofounder@sanjhex.com">Email</a>
+        <a href="tel:+910000000000">Call</a>
+        <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= FRANCHISE / COLLAB / CONTACT ================= -->
+<section id="franchise">
+  <div class="section-head">
+    <div class="eyebrow">Partner With Us</div>
+    <h2>Franchise &amp; Collaboration</h2>
+    <p>Want to open a Sanjhex franchise in your city, or collaborate with us on a drop, event, or brand partnership? Fill the form and our team will get back to you.</p>
+  </div>
+
+  <div class="franchise-wrap">
+    <div class="franchise-info" id="contact">
+
+      <div class="info-item">
+        <div class="ico">🏬</div>
+        <div>
+          <h4>Franchise With Sanjhex</h4>
+          <p>Bring Sanjhex to your city. We support new franchise partners with stock, branding, and marketing guidance.</p>
+        </div>
+      </div>
+
+      <div class="info-item">
+        <div class="ico">🤝</div>
+        <div>
+          <h4>Brand Collaborations</h4>
+          <p>Creators, stores, and brands — reach out for co-branded drops, pop-ups, and joint campaigns.</p>
+        </div>
+      </div>
+
+      <div class="info-item">
+        <div class="ico">⚡</div>
+        <div>
+          <h4>Quick Response</h4>
+          <p>Every enquiry is reviewed by our team directly. We usually respond within 24–48 hours.</p>
+        </div>
+      </div>
+
+      <div class="info-item">
+        <div class="ico">📩</div>
+        <div>
+          <h4>Reach Us Directly</h4>
+          <p>Email: business@sanjhex.com<br>Phone: +91 00000 00000<br>Instagram: @sanjhex</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="form-card">
+      <form id="franchiseForm">
+        <div class="form-row">
+          <div class="field">
+            <label for="fName">Full Name</label>
+            <input type="text" id="fName" required placeholder="Your name">
+          </div>
+          <div class="field">
+            <label for="fPhone">Phone Number</label>
+            <input type="tel" id="fPhone" required placeholder="+91 00000 00000">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="fEmail">Email Address</label>
+            <input type="email" id="fEmail" required placeholder="you@example.com">
+          </div>
+          <div class="field">
+            <label for="fCity">City</label>
+            <input type="text" id="fCity" required placeholder="Your city">
+          </div>
+        </div>
+        <div class="field">
+          <label for="fInterest">I'm Interested In</label>
+          <select id="fInterest" required>
+            <option value="" disabled selected>Select an option</option>
+            <option value="Franchise">Franchise Opportunity</option>
+            <option value="Collaboration">Brand Collaboration</option>
+            <option value="Bulk Order">Bulk / Wholesale Order</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="fMsg">Message</label>
+          <textarea id="fMsg" required placeholder="Tell us a bit about your enquiry..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary submit-btn">Submit Enquiry</button>
+        <div class="form-msg" id="formMsg"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <a href="#home" class="brand">
+    <img src="logo.png" alt="Sanjhex logo" style="height:32px;">
+    <span>SANJHEX</span>
+  </a>
+  <div class="foot-links">
+    <a href="#founders">Founders</a>
+    <a href="#franchise">Franchise</a>
+    <a href="#contact">Contact</a>
+    <a href="#" id="openAdminFooter">Admin</a>
+  </div>
+</footer>
+
+<!-- ================= ADMIN PANEL ================= -->
+<div class="admin-overlay" id="adminOverlay">
+  <div class="admin-topbar">
+    <a href="#home" class="brand"><img src="logo.png" alt="Sanjhex logo" style="height:30px;"><span>SANJHEX ADMIN</span></a>
+    <button class="admin-close" id="adminClose">&times;</button>
+  </div>
+
+  <div class="admin-login" id="adminLogin">
+    <div class="login-card">
+      <h2>Admin Login</h2>
+      <p>Enter your credentials to view franchise &amp; collaboration submissions.</p>
+      <div class="field">
+        <label for="adminUser">Username</label>
+        <input type="text" id="adminUser" placeholder="admin">
+      </div>
+      <div class="field">
+        <label for="adminPass">Password</label>
+        <input type="password" id="adminPass" placeholder="••••••••">
+      </div>
+      <button class="btn btn-primary" id="adminLoginBtn" style="width:100%;justify-content:center;">Login</button>
+      <div class="login-err" id="adminErr">Incorrect username or password.</div>
+    </div>
+  </div>
+
+  <div class="admin-dash" id="adminDash">
+    <div class="admin-stats">
+      <div class="stat-box"><div class="num" id="statTotal">0</div><div class="lbl">Total Submissions</div></div>
+      <div class="stat-box"><div class="num" id="statFranchise">0</div><div class="lbl">Franchise Enquiries</div></div>
+      <div class="stat-box"><div class="num" id="statCollab">0</div><div class="lbl">Collaboration Enquiries</div></div>
+      <div class="stat-box"><div class="num" id="statToday">0</div><div class="lbl">Today</div></div>
+    </div>
+    <div class="admin-toolbar">
+      <h3>All Submissions</h3>
+      <div style="display:flex;gap:10px;">
+        <button class="mini-btn" id="adminRefresh">Refresh</button>
+        <button class="mini-btn" id="adminLogout">Logout</button>
+      </div>
+    </div>
+    <div class="submissions-list" id="submissionsList"></div>
+  </div>
+</div>
+
+<script>
+/* ---------- MENU ---------- */
+const burgerBtn = document.getElementById('burgerBtn');
+const menuOverlay = document.getElementById('menuOverlay');
+burgerBtn.addEventListener('click', ()=>{
+  burgerBtn.classList.toggle('open');
+  menuOverlay.classList.toggle('open');
+});
+document.querySelectorAll('.menu-links a[data-close]').forEach(a=>{
+  a.addEventListener('click', ()=>{
+    burgerBtn.classList.remove('open');
+    menuOverlay.classList.remove('open');
+  });
+});
+
+/* ---------- FRANCHISE FORM ---------- */
+const STORAGE_KEY = 'sanjhex_submissions';
+const franchiseForm = document.getElementById('franchiseForm');
+const formMsg = document.getElementById('formMsg');
+
+function getSubmissions(){
+  try{ return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+  catch(e){ return []; }
+}
+function saveSubmissions(arr){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+}
+
+franchiseForm.addEventListener('submit', function(e){
+  e.preventDefault();
+  const entry = {
+    id: Date.now().toString(36) + Math.random().toString(36).slice(2,7),
+    name: document.getElementById('fName').value.trim(),
+    phone: document.getElementById('fPhone').value.trim(),
+    email: document.getElementById('fEmail').value.trim(),
+    city: document.getElementById('fCity').value.trim(),
+    interest: document.getElementById('fInterest').value,
+    message: document.getElementById('fMsg').value.trim(),
+    time: new Date().toISOString()
+  };
+  const arr = getSubmissions();
+  arr.unshift(entry);
+  saveSubmissions(arr);
+
+  formMsg.textContent = "Thanks! Your enquiry has been submitted. Our team will reach out soon.";
+  formMsg.className = 'form-msg show ok';
+  franchiseForm.reset();
+
+  setTimeout(()=>{ formMsg.classList.remove('show'); }, 5000);
+});
+
+/* ---------- ADMIN PANEL ---------- */
+const ADMIN_USER = 'admin';
+const ADMIN_PASS = 'sanjhex2026';
+
+const adminOverlay = document.getElementById('adminOverlay');
+const adminLogin = document.getElementById('adminLogin');
+const adminDash = document.getElementById('adminDash');
+const adminErr = document.getElementById('adminErr');
+
+function openAdmin(){
+  adminOverlay.classList.add('show');
+  burgerBtn.classList.remove('open');
+  menuOverlay.classList.remove('open');
+  if(sessionStorage.getItem('sanjhex_admin_ok') === '1'){
+    showDash();
+  } else {
+    adminLogin.style.display='flex';
+    adminDash.classList.remove('show');
+  }
+}
+document.getElementById('openAdmin').addEventListener('click', (e)=>{e.preventDefault(); openAdmin();});
+document.getElementById('openAdminFooter').addEventListener('click', (e)=>{e.preventDefault(); openAdmin();});
+document.getElementById('adminClose').addEventListener('click', ()=>{ adminOverlay.classList.remove('show'); });
+
+document.getElementById('adminLoginBtn').addEventListener('click', ()=>{
+  const u = document.getElementById('adminUser').value.trim();
+  const p = document.getElementById('adminPass').value;
+  if(u === ADMIN_USER && p === ADMIN_PASS){
+    sessionStorage.setItem('sanjhex_admin_ok','1');
+    adminErr.classList.remove('show');
+    showDash();
+  } else {
+    adminErr.classList.add('show');
+  }
+});
+
+document.getElementById('adminLogout').addEventListener('click', ()=>{
+  sessionStorage.removeItem('sanjhex_admin_ok');
+  adminDash.classList.remove('show');
+  adminLogin.style.display='flex';
+  document.getElementById('adminUser').value='';
+  document.getElementById('adminPass').value='';
+});
+
+document.getElementById('adminRefresh').addEventListener('click', renderSubmissions);
+
+function showDash(){
+  adminLogin.style.display='none';
+  adminDash.classList.add('show');
+  renderSubmissions();
+}
+
+function renderSubmissions(){
+  const arr = getSubmissions();
+  const list = document.getElementById('submissionsList');
+
+  document.getElementById('statTotal').textContent = arr.length;
+  document.getElementById('statFranchise').textContent = arr.filter(s=>s.interest==='Franchise').length;
+  document.getElementById('statCollab').textContent = arr.filter(s=>s.interest==='Collaboration').length;
+  const todayStr = new Date().toDateString();
+  document.getElementById('statToday').textContent = arr.filter(s=> new Date(s.time).toDateString() === todayStr).length;
+
+  if(arr.length === 0){
+    list.innerHTML = '<div class="empty-state"><div class="ico">📭</div><div>No submissions yet. New franchise &amp; collab enquiries will show up here.</div></div>';
+    return;
+  }
+
+  list.innerHTML = arr.map(s=>{
+    const d = new Date(s.time);
+    const dateStr = d.toLocaleDateString() + ' · ' + d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+    return `
+    <div class="sub-card" data-id="${s.id}">
+      <div class="sub-main">
+        <div class="item"><div class="k">Name</div><div class="v">${escapeHtml(s.name)}</div></div>
+        <div class="item"><div class="k">Phone</div><div class="v">${escapeHtml(s.phone)}</div></div>
+        <div class="item"><div class="k">Email</div><div class="v">${escapeHtml(s.email)}</div></div>
+        <div class="item"><div class="k">City</div><div class="v">${escapeHtml(s.city)}</div></div>
+        <div class="item"><div class="k">Interested In</div><div class="v">${escapeHtml(s.interest)}</div></div>
+        <div class="item msg"><div class="k">Message</div><div class="v">${escapeHtml(s.message)}</div></div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:10px;">
+        <div class="sub-time">${dateStr}</div>
+        <button class="sub-del" data-del="${s.id}">Delete</button>
+      </div>
+    </div>`;
+  }).join('');
+
+  list.querySelectorAll('[data-del]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const id = btn.getAttribute('data-del');
+      const filtered = getSubmissions().filter(s=>s.id !== id);
+      saveSubmissions(filtered);
+      renderSubmissions();
+    });
+  });
+}
+
+function escapeHtml(str){
+  const div = document.createElement('div');
+  div.textContent = str || '';
+  return div.innerHTML;
+}
+</script>
+
+</body>
+</html>
